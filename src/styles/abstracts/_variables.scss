@@ -1,2 +1,32 @@
-// Variables
 $font-inter: 'Inter', sans-serif;
+
+$color-white: oklch(100% 0 0);
+
+$color-cool-gray-50: oklch(98% 0.001869 274);
+$color-cool-gray-100: oklch(96% 0.003773 274);
+$color-cool-gray-200: oklch(92% 0.007673 274);
+$color-cool-gray-300: oklch(87% 0.012731 274);
+$color-cool-gray-400: oklch(76% 0.022083 273.3);
+$color-cool-gray-500: oklch(64% 0.030921 274);
+$color-cool-gray-600: oklch(54% 0.035917 274);
+$color-cool-gray-700: oklch(42% 0.037131 274.4);
+$color-cool-gray-800: oklch(30.7% 0.02917 274);
+$color-cool-gray-900: oklch(19.2% 0.032833 274);
+
+// prettier-ignore
+$text-styles: (
+  'xs': (12px, 18px),
+  'sm': (14px, 20px),
+  'base': (16px, 24px),
+  'lg': (18px, 26px),
+  'xl': (20px, 28px),
+  '2xl': (24px, 32px)
+);
+
+$text-weights: (
+  'light': 300,
+  'normal': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700,
+);

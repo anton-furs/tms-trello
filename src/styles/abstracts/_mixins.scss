@@ -1,0 +1,37 @@
+@use './variables' as *;
+@use 'sass:map';
+@use 'sass:list';
+
+/**
+ * Text mixin for better typography styling
+ * 
+ * @param {string} $size - Size key from $text-styles map (e.g., 'xs', 'sm', 'base', 'lg', 'xl')
+ * @param {string} $weight - Weight key from $text-weights map (e.g., 'regular', 'medium', 'bold')
+ * @param {string|number} $line-height - Optional custom line height (overrides default from $text-styles)
+ * 
+ * Usage examples:
+ * 
+ * Basic usage with size only:
+ * @include text('base');
+ * 
+ * Size and weight:
+ * @include text('lg', 'bold');
+ * 
+ * Size, weight and custom line height:
+ * @include text('sm', 'medium', 1.5);
+ * 
+ * Size and custom line height (skipping weight):
+ * @include text('xl', $line-height: 1.2);
+ */
+@mixin text($size, $weight: null, $line-height: null) {
+  $text-style: map.get($text-styles, $size);
+  font-size: list.nth($text-style, 1);
+  @if $line-height {
+    line-height: $line-height;
+  } @else {
+    line-height: list.nth($text-style, 2);
+  }
+  @if $weight {
+    font-weight: map.get($text-weights, $weight);
+  }
+}
