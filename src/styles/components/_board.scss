@@ -1,6 +1,6 @@
-.board {
-  // Board component styles
-}
+// .board {
+//   // Board component styles
+// }
 .board-header {
   display: flex;
   justify-content: space-between;
@@ -28,6 +28,7 @@
     cursor: pointer;
     font-weight: 500;
     transition: background-color 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.7);
 
     &:hover {
       background-color: #dfe1e6;
