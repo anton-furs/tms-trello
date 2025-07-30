@@ -18,5 +18,9 @@
     "prettier": "^3.6.2",
     "sass": "^1.89.2",
     "vite": "^7.0.4"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13",
+    "nanoid": "^5.1.5"
   }
 }
