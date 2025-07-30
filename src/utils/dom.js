@@ -1,11 +1,5 @@
 // Create DOM element
-export const createElement = ({
-  tag,
-  className,
-  textContent,
-  attributes = {},
-  dataset = {},
-}) => {
+export const createElement = ({ tag, className, textContent, attributes = {}, dataset = {} }) => {
   const element = document.createElement(tag);
 
   if (className) element.className = className;

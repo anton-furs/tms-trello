@@ -3,6 +3,44 @@
 @use 'sass:list';
 
 /**
+ * Flexbox layout mixin for quick and consistent flex container styling
+ * 
+ * @param {string} $direction - flex-direction property (row, column, row-reverse, column-reverse)
+ * @param {string} $justify - justify-content property (flex-start, flex-end, center, space-between, space-around, space-evenly)
+ * @param {string} $align - align-items property (flex-start, flex-end, center, baseline, stretch)
+ * @param {number} $gap - gap between flex items (in px, rem, em, etc.)
+ * 
+ * Usage examples:
+ * 
+ * Basic row layout:
+ * @include flex();
+ * 
+ * Column layout with centered items:
+ * @include flex(column, center, center);
+ * 
+ * Space-between layout with 16px gap:
+ * @include flex(row, space-between, center, 16px);
+ * 
+ * Vertical stack with items stretched to fill width:
+ * @include flex(column, flex-start, stretch, 8px);
+ * 
+ * This bypasses $justify and $align but sets $direction and $gap
+ * @include flex(column, $gap: 16px);
+ * 
+ * This bypasses only $justify
+ * @include flex(row, $align: center, $gap: 8px);
+ */
+@mixin flex($direction: row, $justify: flex-start, $align: flex-start, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+/**
  * Text mixin for better typography styling
  * 
  * @param {string} $size - Size key from $text-styles map (e.g., 'xs', 'sm', 'base', 'lg', 'xl')
