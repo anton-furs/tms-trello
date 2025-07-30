@@ -5,6 +5,7 @@ export const createElement = ({
   textContent,
   attributes = {},
   dataset = {},
+  children = []
 }) => {
   const element = document.createElement(tag);
 
@@ -20,6 +21,14 @@ export const createElement = ({
   if (dataset) {
     Object.entries(dataset).forEach(([key, value]) => {
       element.dataset[key] = value ?? '';
+    });
+  }
+
+  if (Array.isArray(children)) {
+    children.forEach((child) => {
+      if (child instanceof Node) {
+        element.appendChild(child);
+      }
     });
   }
 
