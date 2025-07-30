@@ -15,7 +15,7 @@
   <body>
     <div id="root"></div>
     <script type="module">
-      const developer = import.meta.env.DEVELOPER || 'anton';
+      const developer = import.meta.env.VITE_DEVELOPER;
       import(`./main-${developer}.js`);
     </script>
   </body>
