@@ -8,7 +8,10 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier . --write"
+    "format": "prettier . --write",
+    "playground:anton": "VITE_DEVELOPER=anton vite playground --port 3001",
+    "playground:vera": "VITE_DEVELOPER=vera vite playground --port 3002",
+    "playground:alex": "VITE_DEVELOPER=alex vite playground --port 3003"
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",
@@ -17,6 +20,6 @@
     "globals": "^16.3.0",
     "prettier": "^3.6.2",
     "sass": "^1.89.2",
-    "vite": "^7.0.6"
+    "vite": "^7.0.4"
   }
 }
