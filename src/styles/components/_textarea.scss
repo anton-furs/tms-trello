@@ -1,3 +1,16 @@
+@use '../abstracts' as *;
 .textarea {
   // Textarea component styles
+  border: 1px solid $color-cool-gray-200;
+  border-radius: 8px;
+  padding: 12px 14px;
+  width: 100%;
+  height: 80px;
+  font-family: $font-inter;
+  resize: none;
+  @include text('sm', 'normal', 16px);
+
+  &::placeholder {
+    color: $color-cool-gray-300;
+  }
 }
