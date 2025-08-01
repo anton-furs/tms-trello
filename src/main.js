@@ -1,7 +1,5 @@
-import './styles/main.scss';
-import { createElement } from './utils/dom';
-import { Header } from './components/header.js';
-import { Board } from './components/board.js';
+import '@styles/main.scss';
+import { createElement } from '@utils/dom';
 
 const App = () => {
   const container = createElement({ tag: 'div', className: 'container' });
