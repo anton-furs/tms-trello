@@ -1,5 +1,5 @@
-import './styles/main.scss';
-import { createElement } from './utils/dom';
+import '@styles/main.scss';
+import { createElement } from '@utils/dom';
 
 const App = () => {
   const container = createElement({ tag: 'div', className: 'container' });

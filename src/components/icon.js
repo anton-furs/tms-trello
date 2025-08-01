@@ -1,10 +1,10 @@
-import { createElement } from '../utils/dom.js';
+import { createElement } from '@utils/dom';
 
-import deleteBin from '../assets/icons/svg/delete-bin.svg?raw';
-import plusSign from '../assets/icons/svg/plus-sign.svg?raw';
-import unfoldMore from '../assets/icons/svg/unfold-more.svg?raw';
-import chevronLeft from '../assets/icons/svg/chevron-left-01.svg?raw';
-import chevronRight from '../assets/icons/svg/chevron-right-01.svg?raw';
+import deleteBin from '@assets/icons/svg/delete-bin.svg?raw';
+import plusSign from '@assets/icons/svg/plus-sign.svg?raw';
+import unfoldMore from '@assets/icons/svg/unfold-more.svg?raw';
+import chevronLeft from '@assets/icons/svg/chevron-left-01.svg?raw';
+import chevronRight from '@assets/icons/svg/chevron-right-01.svg?raw';
 
 const icons = {
   'delete-bin': deleteBin,
