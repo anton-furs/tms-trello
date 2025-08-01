@@ -5,6 +5,7 @@ export const createElement = ({
   textContent,
   attributes = {},
   dataset = {},
+  children = []
 }) => {
   const element = document.createElement(tag);
 
