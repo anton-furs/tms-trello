@@ -1,3 +1,28 @@
+@use '../abstracts' as *;
+
 .modal {
   // Modal base component styles
+  display: none;
+  z-index: 1;
+  position: fixed;
+  margin: 15% auto;
+  width: 560px;
+  height: 264px;
+  border: 1px solid $color-cool-gray-200;
+  border-radius: 16px;
+  box-shadow: 0px 4px 40px 0px $color-cool-gray-200;
+  padding: 16px;
+
+  &-title {
+    @include text('lg', 'medium');
+  }
+
+  &-footer{
+    width: 100%;
+    @include flex($direction: row, $justify: flex-end);
+
+    &__button{
+      @include flex($direction: row, $gap: 8px);
+    }
+  }
 }
