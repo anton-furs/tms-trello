@@ -5,5 +5,5 @@ export const createButton = ({className: className, textContent: textContent}) =
   return button;
 }
 
-export const buttonOk = createButton({ className: 'button-modal button-modal_black', textContent: 'OK' });
-export const buttonCancel = createButton({ className: 'button-modal button-modal_gray', textContent: 'Cancel' });
+export const buttonOk = createButton({ className: 'button-modal button-modal__ok', textContent: 'OK' });
+export const buttonCancel = createButton({ className: 'button-modal button-modal__cancel', textContent: 'Cancel' });
