@@ -40,6 +40,7 @@ export const Header = () => {
   });
 };
 // отображать формат AM/PM
+// const getTimeString = () => dayjs().format('hh:mm A');
 function getTimeString() {
   const now = new Date();
   let hours = now.getHours();

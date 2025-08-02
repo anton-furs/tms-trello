@@ -1,7 +1,7 @@
 import { createElement } from '../utils/dom.js';
 
 export const Board = () => {
-  return createElement({
+  const header = createElement({
     tag: 'section',
     className: 'board-header',
     children: [
@@ -21,11 +21,36 @@ export const Board = () => {
           }),
           createElement({
             tag: 'button',
-            className: 'board-header__button',
+            className: 'board-header__button', 
             textContent: 'Clear done',
           }),
         ],
       }),
     ],
   });
+  const columns = createElement({
+    tag: 'div',
+    className: 'board-wrapper',
+    children: [
+      createElement({
+        tag: 'div',
+        className: 'board-columns',
+        children: Array.from({ length: 5 }, (_, i) =>
+          createElement({
+            tag: 'div',
+            className: 'list',
+            children: [
+              createElement({
+                tag: 'h2',
+                className: 'list_title',
+                textContent: `Column ${i + 1}`,
+              }),
+            ],
+          })
+        ),
+      }),
+    ],
+  });
+
+  return [header, columns]; 
 };

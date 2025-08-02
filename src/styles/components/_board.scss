@@ -1,6 +1,11 @@
 // .board {
 //   // Board component styles
 // }
+.playground{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 .board-header {
   display: flex;
   justify-content: space-between;
@@ -33,5 +38,32 @@
     &:hover {
       background-color: #dfe1e6;
     }
+  }
+}
+.board-wrapper {
+    flex-grow: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 16px;
+  }
+.board-columns{
+    display: flex;
+    gap: 16px;
+    min-width: max-content;
+    margin-top: 16px;
+  }
+.list{
+  min-width: 344px;
+  height: 300px;
+  background: #e3e3e3;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  
+  &__title{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
   }
 }
