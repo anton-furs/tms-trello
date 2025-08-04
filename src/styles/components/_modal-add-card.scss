@@ -1,6 +1,3 @@
-@use '../abstracts' as *;
-
 .modal-add-card {
   // Modal add card component styles
-  @include flex($direction: column, $justify: space-between);
 }
