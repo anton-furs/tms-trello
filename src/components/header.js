@@ -1,4 +1,5 @@
 import { createElement } from '../utils/dom.js';
+import dayjs from 'dayjs';
 
 export const Header = () => {
   const logo = createElement({
@@ -40,20 +41,5 @@ export const Header = () => {
   });
 };
 // отображать формат AM/PM
-// const getTimeString = () => dayjs().format('hh:mm A');
-function getTimeString() {
-  const now = new Date();
-  let hours = now.getHours();
-  const minutes = now.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-
-  hours = hours % 12;
-  if (hours === 0) hours = 12;
-
-  return `${pad(hours)}:${pad(minutes)} ${ampm}`;
-}
-
-function pad(n) {
-  return n < 10 ? '0' + n : n.toString();
-}
+const getTimeString = () => dayjs().format('hh:mm A');
 

@@ -2,11 +2,4 @@
 @use 'components';
 @use 'layout';
 
-@use './components/header';
-@use './components/board';
 
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #dcdfe4;
-}

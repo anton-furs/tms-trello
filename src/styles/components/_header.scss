@@ -1,10 +1,13 @@
+@use '../abstracts' as *;
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #101923;
+  background-color: oklch(19.2% 0.032833 274);
+
   color: white;
-  padding: 12px 24px;
+  padding: 12px 16px;
 
   &__left,
   &__right {
