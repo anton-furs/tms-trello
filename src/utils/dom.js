@@ -1,5 +1,5 @@
 // Create DOM element
-export const createElement = ({ tag, className, textContent, attributes = {}, dataset = {} }) => {
+export const createElement = ({ tag, className, textContent, attributes = {}, dataset = {}, children = [] }) => {
   const element = document.createElement(tag);
 
   if (className) element.className = className;
@@ -14,6 +14,14 @@ export const createElement = ({ tag, className, textContent, attributes = {}, da
   if (dataset) {
     Object.entries(dataset).forEach(([key, value]) => {
       element.dataset[key] = value ?? '';
+    });
+  }
+
+  if (Array.isArray(children)) {
+    children.forEach((child) => {
+      if (child instanceof Node) {
+        element.appendChild(child);
+      }
     });
   }
 
