@@ -19,6 +19,25 @@ body {
   font-family: $font-inter;
 }
 
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input,
+textarea {
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
 #root {
   min-height: 100vh;
 }

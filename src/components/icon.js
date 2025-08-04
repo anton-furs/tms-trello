@@ -14,17 +14,21 @@ const icons = {
   'chevron-right': chevronRight,
 };
 
-export const Icon = ({ name = 'delete-bin', size = 24, className = '' }) => {
+export const createIcon = ({ svg, name = 'delete-bin', size = 24, className = '', type = 'fill' }) => {
   // Create template and set content
   const templateElem = createElement({ tag: 'template' });
-  templateElem.innerHTML = icons[name];
+  svg ? (templateElem.innerHTML = svg) : (templateElem.innerHTML = icons[name]);
 
   // Get SVG element
   const svgElem = templateElem.content.firstChild;
 
   // Set path stroke color
   svgElem.querySelectorAll('path').forEach((path) => {
-    path.setAttribute('stroke', 'currentColor');
+    if (type === 'fill') path.setAttribute('fill', 'currentColor');
+    if (type === 'stroke') {
+      path.setAttribute('stroke', 'currentColor');
+      path.setAttribute('vector-effect', 'non-scaling-stroke');
+    }
   });
 
   // Set size and class attributes
