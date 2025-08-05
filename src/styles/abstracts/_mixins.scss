@@ -73,3 +73,21 @@
     font-weight: map.get($text-weights, $weight);
   }
 }
+
+/**
+ * Line-clamp for sass compatibility
+ * 
+ * @param {number} $lines - limits the text lines
+ * 
+ * Usage examples:
+ * 
+ * Basic row layout:
+ * @include line-clamp();
+ */
+
+@mixin line-clamp($lines: 0){
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

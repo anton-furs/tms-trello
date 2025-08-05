@@ -1,5 +1,10 @@
 import { createModal } from '@components/modal-base';
-import { textArea } from '@components/textarea';
-import { inputModal } from '@components/input';
+import { createTextArea } from '@components/textarea';
+import { createInput } from '@components/input';
 
-export const modalAddCard = createModal({ title: 'Add a card', bodyModal: [inputModal, textArea]});
+export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText) => {
+  const modalInput = createInput(bodyTitle);
+  const modatTextArea = createTextArea(bodyText);
+  const modalAddCard = createModal({ title: cardTitle, bodyModal: [modalInput, modatTextArea]});
+  return modalAddCard;
+}
