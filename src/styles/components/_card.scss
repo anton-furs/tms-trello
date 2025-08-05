@@ -28,11 +28,21 @@
       padding: 12px;
       height: 100%;
 
-      &-title{
-        @include text('sm', 'medium', 18px);
+      &-block{
+        @include flex(row, $justify: space-between);
         width: 100%;
-        @include line-clamp(2);
+
+        &__title{
+          @include text('sm', 'medium', 18px);
+          width: 100%;
+          @include line-clamp(2);
+        }
+
+        &__delete{
+          display: none;
+        }
       }
+
 
       &-text{
         @include text('xs', 'medium', 16px);
@@ -71,6 +81,10 @@
 
     .card-content__body{
       cursor: pointer;
+    }
+
+    .card-content__body-block__delete{
+      display: block;
     }
   }
 }
