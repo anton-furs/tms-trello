@@ -20,9 +20,7 @@ export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText
       userCard.textContent = user ? formatUser(user) : '';
     }
     else{
-      const cardNew = createCard({ title: modalInput.value, text: modatTextArea.value, user: user ? user : ''});
-      const root = document.getElementById('myId');
-      root.appendChild(cardNew);       
+      const cardNew = createCard({ title: modalInput.value, text: modatTextArea.value, user: user ? user : ''});    
     }
     modalAddCard.remove();
   }
