@@ -1,3 +1,11 @@
+@use '../abstracts' as *;
+
 .select {
   // Select component styles
+  border: none;
+  border-radius: 8px;
+  width: 176px;
+  height: 40px;
+  background-color: $color-cool-gray-100;
+  text-align: center;
 }
