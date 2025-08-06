@@ -1,3 +1,31 @@
+@use '../abstracts' as *;
+
 .board {
-  // Board component styles
+  width: 100%;
+  flex: 1;
+  @include flex(column);
+  overflow-x: auto;
+  background-color: #babdc9;
+
+  &__header {
+    width: 100%;
+    padding: 0 12px;
+    height: 56px;
+    @include flex(row, $align: center, $justify: space-between);
+    background-color: oklch(18.6% 0.04405 273.4 / 0.1);
+    filter: multiply;
+    backdrop-filter: blur(20px);
+  }
+
+  &__name {
+    color: $color-white;
+    @include text('lg', 'medium');
+    letter-spacing: -0.01em;
+  }
+
+  &__lists {
+    width: 100%;
+    padding: 12px;
+    @include flex(row, $gap: 12px);
+  }
 }
