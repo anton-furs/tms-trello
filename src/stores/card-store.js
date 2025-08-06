@@ -2,19 +2,19 @@ import dayjs from 'dayjs';
 import { generateUniqueId } from '@utils/nanoid';
 import { appStore } from '@stores/app-store';
 
-export const cardsStore = {
+export const cardStore = {
   subscribers: new Set(),
 
   // Subscribe to card changes
   subscribe: (listId, callback) => {
     const subscriber = { listId, callback };
-    cardsStore.subscribers.add(subscriber);
-    return () => cardsStore.subscribers.delete(subscriber);
+    cardStore.subscribers.add(subscriber);
+    return () => cardStore.subscribers.delete(subscriber);
   },
 
   // Notify subscribers about card changes
   notify: (listId, state) => {
-    cardsStore.subscribers.forEach((subscriber) => {
+    cardStore.subscribers.forEach((subscriber) => {
       if (subscriber.listId === listId) subscriber.callback(state);
     });
   },
@@ -41,7 +41,7 @@ export const cardsStore = {
     appStore.setState({ cards: [...appStore.getState().cards, card] });
 
     // Notify only the specific list
-    cardsStore.notify(
+    cardStore.notify(
       listId,
       appStore.getState().cards.filter((card) => card.listId === listId)
     );
