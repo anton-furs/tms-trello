@@ -3,8 +3,30 @@ import { generateUniqueId } from '@utils/nanoid';
 import { appStore } from '@stores/app-store';
 
 export const cardsStore = {
+  subscribers: new Set(),
+
+  // Subscribe to card changes
+  subscribe: (listId, callback) => {
+    const subscriber = { listId, callback };
+    cardsStore.subscribers.add(subscriber);
+    return () => cardsStore.subscribers.delete(subscriber);
+  },
+
+  // Notify subscribers about card changes
+  notify: (listId, state) => {
+    cardsStore.subscribers.forEach((subscriber) => {
+      if (subscriber.listId === listId) subscriber.callback(state);
+    });
+  },
+
   // Get all cards
   getCards: () => appStore.getState().cards,
+
+  // Get cards by list id
+  getCardsByListId: (listId) => appStore.getState().cards.filter((card) => card.listId === listId),
+
+  // Get card by id
+  getCardById: (id) => appStore.getState().cards.find((card) => card.id === id),
 
   // Add a card
   addCard: ({ listId, title, description, assignee }) => {
@@ -17,6 +39,13 @@ export const cardsStore = {
       createdAt: dayjs().toISOString(),
     };
     appStore.setState({ cards: [...appStore.getState().cards, card] });
+
+    // Notify only the specific list
+    cardsStore.notify(
+      listId,
+      appStore.getState().cards.filter((card) => card.listId === listId)
+    );
+    return card;
   },
 
   // Update card { title, description, assignee }

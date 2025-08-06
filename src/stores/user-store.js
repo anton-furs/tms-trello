@@ -1,1 +1,1 @@
-// User store
+export const userStore = {};
