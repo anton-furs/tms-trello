@@ -74,7 +74,7 @@
           border-radius: 50%;
           color: $color-cool-gray-50;
           background-color: $color-cool-gray-900;
-          @include text('s', 'medium');
+          @include text('2xs', 'medium');
         }
 
         &__date{
