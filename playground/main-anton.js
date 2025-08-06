@@ -1,13 +1,13 @@
 import '@styles/main.scss';
-import { createElement } from '@utils/dom';
-import { appStore } from '@stores/app-store';
-import { createIcon } from '@components/icon';
+import { dom } from '@utils/dom';
+import { appStore } from '@stores';
+import { createIcon } from '@components';
 
 import trelloIcon from '../public/trello-logo.svg?raw';
 
 const App = () => {
-  const container = createElement({ tag: 'div', className: 'container' });
-  const title = createElement({ tag: 'p', textContent: 'Anton' });
+  const container = dom.create({ tag: 'div', className: 'container' });
+  const title = dom.create({ tag: 'p', textContent: 'Anton' });
   container.appendChild(title);
 
   const icon = createIcon({ svg: trelloIcon, size: 24, type: 'fill' });
