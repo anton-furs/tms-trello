@@ -17,6 +17,7 @@
       background-color: $color-cool-gray-100;
       border-radius: 8px;
       display: none;
+      cursor: pointer;
 
       &-icon{
         color: $color-cool-gray-400;
@@ -27,9 +28,10 @@
       @include flex(column, $justify: space-between, $gap: 16px);
       padding: 12px;
       height: 100%;
+      width: 100%;
 
       &-block{
-        @include flex(row, $justify: space-between);
+        @include flex(row, $justify: space-between, $align: flex-start);
         width: 100%;
 
         &__title{
@@ -40,6 +42,17 @@
 
         &__delete{
           display: none;
+          border-radius: 4px;
+
+          &:hover{
+            background-color: $color-cool-gray-100;
+          }
+
+          &-icon{
+            &:active{
+              color: $color-cool-gray-900;
+            }
+          }
         }
       }
 
@@ -84,7 +97,7 @@
     }
 
     .card-content__body-block__delete{
-      display: block;
+      @include flex(row, $justify: center, $align: center);
     }
   }
 }
