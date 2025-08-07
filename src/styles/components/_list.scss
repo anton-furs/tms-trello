@@ -1,3 +1,95 @@
+@use '../abstracts' as *;
+
 .list {
-  // List component styles
+  min-width: $list-width;
+  height: fit-content;
+  @include flex(column, $gap: 8px);
+  padding: 8px;
+  border-radius: 12px;
+  background-color: $color-cool-gray-200;
+}
+
+// List Header
+.list {
+  &__header {
+    width: 100%;
+    height: 32px;
+    @include flex(row, space-between, center);
+    padding-left: 12px;
+  }
+
+  &__name {
+    @include text('sm', 'semibold');
+    text-transform: uppercase;
+    color: $color-cool-gray-700;
+  }
+
+  &__menu-group {
+    @include flex(row, $align: center, $gap: 8px);
+  }
+
+  &__menu-btn {
+    width: 32px;
+    height: 32px;
+    @include flex(row, center, center);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: transparent;
+
+    &:hover {
+      background-color: $color-cool-gray-300;
+
+      .list__dots-icon {
+        color: $color-cool-gray-500;
+      }
+    }
+  }
+
+  &__dots-icon {
+    color: $color-cool-gray-400;
+  }
+}
+
+// List Body
+.list {
+  &__body {
+    width: 100%;
+    flex: 1;
+    @include flex(column, $gap: 8px);
+  }
+}
+
+// List Footer
+.list {
+  &__footer {
+    width: 100%;
+  }
+
+  &__add-card-button {
+    width: 100%;
+    padding: 8px 8px;
+    @include text('sm', 'medium');
+    color: $color-cool-gray-600;
+
+    &:hover {
+      color: $color-cool-gray-700;
+      background-color: $color-cool-gray-300;
+
+      .list__add-card-button-icon {
+        color: $color-cool-gray-700;
+      }
+    }
+  }
+
+  &__add-card-button-icon {
+    color: $color-cool-gray-600;
+  }
+}
+
+.card {
+  width: 100%;
+  height: 172px;
+  border-radius: 8px;
+  background-color: $color-white;
 }

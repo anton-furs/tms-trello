@@ -1,7 +1,7 @@
 import { dom } from '@utils/dom';
 import { reactive } from '@utils/reactive';
-import { createButton, createIcon } from '@components';
-import { cardStore } from '@stores';
+import { createButton, createIcon, createList } from '@components';
+import { cardStore, listStore } from '@stores';
 
 export const createBoard = ({ id, name }) => {
   const rootElem = dom.create({ tag: 'main', className: 'board' });
@@ -40,6 +40,13 @@ export const createBoard = ({ id, name }) => {
   const listsElem = dom.create({ tag: 'div', className: 'board__lists' });
 
   // TODO: Create lists from listStore
+  listStore.getLists().forEach((list) => {
+    const listElem = createList({
+      id: list.id,
+      name: list.name,
+    });
+    listsElem.appendChild(listElem);
+  });
 
   const addListButtonElem = createButton({
     size: 'md',
