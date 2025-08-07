@@ -1,8 +1,20 @@
 import '@styles/main.scss';
-import { createElement } from '@utils/dom';
+import { dom } from '@utils/dom';
+import { boardStore } from '@stores';
+import { createHeader, createBoard } from '@components';
 
 const App = () => {
-  const container = createElement({ tag: 'div', className: 'container' });
+  const container = dom.create({ tag: 'div', className: 'container' });
+
+  const handleAddList = (event) => {
+    console.log(event.detail);
+  };
+
+  const header = createHeader();
+  const board = createBoard({ id: boardStore.getBoard().id, name: boardStore.getBoard().name });
+  board.addEventListener('addList', handleAddList);
+  container.append(header, board);
+
   return container;
 };
 

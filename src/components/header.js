@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { dom } from '@utils/dom';
 import { createIcon } from '@components';
-import trelloLogo from '../../public/trello-logo.svg?raw';
+import trelloLogo from '@assets/logo/svg/trello-logo.svg?raw';
 
 export const createHeader = () => {
   const getTimeString = () => {
