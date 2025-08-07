@@ -1,9 +1,9 @@
 import { createModal } from '@components/modal-base';
-import { createElement } from '@utils/dom';
+import { dom } from '@utils/dom';
 import { createOkButton } from '@components';
 
 export const createModalConfirm = (idCard) => {
-  const textModal = createElement({
+  const textModal = dom.create({
     tag: 'div',
     className: 'modal-confirm__text',
     textContent: 'Are you sure you want to delete tasks? This action cannot be undone.',
