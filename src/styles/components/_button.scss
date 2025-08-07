@@ -1,11 +1,34 @@
 @use '../abstracts' as *;
 
 .button {
-  // Button component styles
+  @include flex(row, $align: center, $gap: 8px);
   border-radius: 8px;
-  height: 40px;
-  width: 102px;
-  border: none;
-  @include text('sm', 'medium', 16px);
-  cursor: pointer;
+
+  &--sm {
+    min-height: 24px;
+    padding: 4px 12px;
+    @include text('xs', 'medium');
+  }
+
+  &--md {
+    min-height: 32px;
+    padding: 6px 16px;
+    @include text('sm', 'medium');
+  }
+
+  &--lg {
+    min-height: 40px;
+    padding: 10px 20px;
+    @include text('sm', 'medium');
+  }
 }
+
+// .button {
+//   // Button component styles
+//   border-radius: 8px;
+//   height: 40px;
+//   width: 102px;
+//   border: none;
+//   @include text('sm', 'medium', 16px);
+//   cursor: pointer;
+// }

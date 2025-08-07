@@ -6,8 +6,13 @@ import { createHeader, createBoard } from '@components';
 const App = () => {
   const container = dom.create({ tag: 'div', className: 'container' });
 
+  const handleAddList = (event) => {
+    console.log(event.detail);
+  };
+
   const header = createHeader();
-  const board = createBoard({ name: boardStore.getBoard().name });
+  const board = createBoard({ id: boardStore.getBoard().id, name: boardStore.getBoard().name });
+  board.addEventListener('addList', handleAddList);
   container.append(header, board);
 
   return container;

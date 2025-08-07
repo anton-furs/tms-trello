@@ -17,15 +17,47 @@
     backdrop-filter: blur(20px);
   }
 
+  &__button-group {
+    @include flex(row, $gap: 8px);
+  }
+
+  &__button {
+    color: $color-cool-gray-900;
+    background-color: $color-cool-gray-200;
+
+    &:hover {
+      background-color: $color-cool-gray-100;
+    }
+  }
+
   &__name {
     color: $color-white;
     @include text('lg', 'medium');
     letter-spacing: -0.01em;
   }
 
-  &__lists {
+  &__canvas {
     width: 100%;
     padding: 12px;
+    flex: 1;
     @include flex(row, $gap: 12px);
+  }
+
+  &__lists {
+    width: fit-content;
+    @include flex(row, $gap: 12px);
+  }
+
+  &__add-list-button {
+    min-width: $list-width;
+    height: 40px;
+    border-radius: 12px;
+    @include text('sm', 'medium');
+    color: $color-white;
+    background-color: color-mix(in oklch, $color-white 20%, transparent);
+
+    &:hover {
+      background-color: color-mix(in oklch, $color-white 25%, transparent);
+    }
   }
 }
