@@ -1,3 +1,11 @@
+@use '../abstracts' as *;
+
 .modal-confirm {
   // Modal confirm component styles
+  width: 360px;
+
+  &__text{
+    @include text('sm', 'normal');
+    color: $color-cool-gray-500;
+  }
 }
