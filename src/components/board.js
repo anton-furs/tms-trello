@@ -1,7 +1,7 @@
 import { dom } from '@utils/dom';
 import { reactive } from '@utils/reactive';
 import { createButton, createIcon, createList, createAddListModal } from '@components';
-import { cardStore, listStore } from '@stores';
+import { boardStore, cardStore, listStore } from '@stores';
 
 export const createBoard = ({ name }) => {
   const rootElem = dom.create({ tag: 'main', className: 'board' });
@@ -53,7 +53,9 @@ export const createBoard = ({ name }) => {
     document.body.appendChild(modal);
     modal.showModal();
     modal.addEventListener('modal:confirm', (e) => {
-      console.log('modal:confirm');
+      const data = e.detail;
+      listStore.addList({ boardId: boardStore.getBoard().id, ...data });
+      console.log('modal:confirm', data);
     });
     modal.addEventListener('modal:cancel', (e) => {
       console.log('modal:cancel');
@@ -98,8 +100,8 @@ export const createBoard = ({ name }) => {
   rootElem.append(headerElem, canvasElem);
 
   // Subscribe to cards store
-  const unsubscribe = cardStore.subscribe((state) => {
-    dom.cards.update(listsElem, state);
+  const unsubscribe = listStore.subscribe((state) => {
+    dom.lists.update(listsElem, state);
   });
 
   // Register component for cleanup
