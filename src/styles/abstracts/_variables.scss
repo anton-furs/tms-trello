@@ -3,6 +3,7 @@ $list-width: 342px;
 $font-inter: 'Inter', sans-serif;
 
 $color-white: oklch(100% 0 0);
+$color-black: oklch(0% 0 0);
 
 $color-cool-gray-50: oklch(98% 0.001869 274);
 $color-cool-gray-100: oklch(96% 0.003773 274);
@@ -72,13 +73,13 @@ $color-air-force-blue-900: oklch(20% 0.022587 224.3);
 
 // prettier-ignore
 $text-styles: (
-  '2xs': (10px, 10px),
-  'xs': (12px, 18px),
-  'sm': (14px, 20px),
-  'base': (16px, 24px),
-  'lg': (18px, 26px),
-  'xl': (20px, 28px),
-  '2xl': (24px, 32px)
+  '2xs': (10px, 14px),
+  'xs': (12px, 16px),
+  'sm': (14px, 18px),
+  'base': (16px, 20px),
+  'lg': (18px, 22px),
+  'xl': (20px, 24px),
+  '2xl': (24px, 28px)
 );
 
 $text-weights: (

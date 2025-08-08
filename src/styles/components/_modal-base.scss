@@ -1,47 +1,67 @@
 @use '../abstracts' as *;
 
 .modal {
-  // Modal base component styles
-  position: fixed;
-  margin: 15% auto;
   width: 560px;
-  border: 1px solid $color-cool-gray-200;
+  height: fit-content;
+  @include flex(column, $gap: 16px);
   border-radius: 16px;
-  box-shadow: 0px 4px 40px 0px $color-cool-gray-200;
-  padding: 16px;
+  border: 1px solid $color-cool-gray-200;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $color-white;
 
-  &-header{
+  &__content {
     width: 100%;
+    height: 100%;
+    @include flex(column, $gap: 16px);
+    padding: 16px;
+  }
 
-    &__title {
+  &__header {
+    width: 100%;
+    @include flex(row, $align: center);
+
+    &-title {
       @include text('lg', 'medium');
-    }
-  }
-
-  &-body{
-    @include flex(column, $justify: space-between, $gap: 12px);
-    margin: 16px 0px;
-  }
-
-  &-footer{
-    width: 100%;
-    @include flex(row, $justify: flex-end);
-
-    &__button{
-      @include flex(row, $gap: 8px);
-    }
-  }
-
-  &-button{
-    
-    &__cancel{
-      background-color: $color-cool-gray-100;
       color: $color-cool-gray-900;
     }
+  }
 
-    &__ok{
+  &__body {
+    width: 100%;
+    @include flex(column, $gap: 12px);
+  }
+
+  &__footer {
+    width: 100%;
+    @include flex(row, $align: center);
+  }
+
+  &__button-group {
+    width: 100%;
+    @include flex(row, $gap: 8px);
+  }
+
+  &__button {
+    width: fit-content;
+    min-height: 40px;
+    padding: 10px 20px;
+    @include text('sm', 'medium');
+    border-radius: 8px;
+
+    &--solid {
       background-color: $color-cool-gray-900;
       color: $color-cool-gray-50;
     }
+
+    &--tinted {
+      background-color: $color-cool-gray-100;
+      color: $color-cool-gray-900;
+    }
+  }
+
+  &::backdrop {
+    background-color: color-mix(in oklab, $color-black 60%, transparent);
   }
 }

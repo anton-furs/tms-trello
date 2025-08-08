@@ -1,9 +1,9 @@
-import { createElement } from '@utils/dom';
+import { dom } from '@utils/dom';
 
 export const createTextArea = (text) => {
-  const textArea = createElement({ tag: 'textarea', className: 'textarea', attributes: {'placeholder': 'Description'}});
+  const textArea = dom.create({ tag: 'textarea', className: 'textarea', attributes: { placeholder: 'Description' } });
   if (text) {
     textArea.value = text;
   }
   return textArea;
-}
+};

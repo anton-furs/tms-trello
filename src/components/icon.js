@@ -1,4 +1,4 @@
-import { createElement } from '@utils/dom';
+import { dom } from '@utils/dom';
 
 import deleteBin from '@assets/icons/svg/delete-bin.svg?raw';
 import plusSign from '@assets/icons/svg/plus-sign.svg?raw';
@@ -18,7 +18,7 @@ const icons = {
 
 export const createIcon = ({ svg, name = 'delete-bin', size = 24, className = '', type = 'fill' }) => {
   // Create template and set content
-  const templateElem = createElement({ tag: 'template' });
+  const templateElem = dom.create({ tag: 'template' });
   svg ? (templateElem.innerHTML = svg) : (templateElem.innerHTML = icons[name]);
 
   // Get SVG element

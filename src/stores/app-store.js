@@ -27,9 +27,9 @@ const DEFAULT_APP_STATE = {
     {
       id: generateUniqueId(),
       listId: DEFAULT_LISTS[0].id,
-      title: 'Implement drag & drop for the card component',
+      title: 'Implement drag & drop for the card component to reorder cards within the same list',
       description:
-        'Users should be able to drag and reorder task cards within the same column, with changes reflected in both the UI and backend.',
+        'Users should be able to drag and reorder task cards within the same column, with changes reflected in both the UI and backend. Enable users to click on a card and edit its title and description inside a popup with autosave or confirmation button.',
       assignee: 'Clementine Bauch',
       createdAt: dayjs().toISOString(),
     },

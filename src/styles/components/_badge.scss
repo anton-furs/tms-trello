@@ -1,3 +1,35 @@
+@use '../abstracts' as *;
+
 .badge {
-  // Badge component styles
+  width: fit-content;
+  min-height: 24px;
+  @include flex(row, center, center);
+  padding: 0 12px;
+  border-radius: 12px;
+  color: $color-white;
+  @include text('sm', 'medium');
+
+  &--cool-gray {
+    background-color: $color-cool-gray-400;
+  }
+
+  &--indian-red {
+    background-color: $color-indian-red-400;
+  }
+
+  &--sky-magenta {
+    background-color: $color-sky-magenta-400;
+  }
+
+  &--african-violet {
+    background-color: $color-african-violet-400;
+  }
+
+  &--silver-lake-blue {
+    background-color: $color-silver-lake-blue-400;
+  }
+
+  &--air-force-blue {
+    background-color: $color-air-force-blue-400;
+  }
 }

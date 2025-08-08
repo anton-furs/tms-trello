@@ -1,10 +1,16 @@
-import { createElement } from '@utils/dom';
-import { generateUniqueId } from '@utils/nanoid'
+import { dom } from '@utils/dom';
 
-export const createButton = ({className: className, textContent: textContent}) => {
-  const button = createElement({ tag: 'button', className: className, textContent: textContent, attributes: {id: generateUniqueId()} });
-  return button;
-}
+export const createButton = ({ type = 'button', size = 'md', className, textContent, children = [] }) => {
+  const buttonElem = dom.create({
+    tag: 'button',
+    className: `button button--${size} ${className}`,
+    textContent,
+    children,
+  });
+  buttonElem.type = type;
 
-export const buttonOk = createButton({ className: 'button modal-button__ok', textContent: 'OK' });
-export const buttonCancel = createButton({ className: 'button modal-button__cancel', textContent: 'Cancel' });
+  return buttonElem;
+};
+
+export const createOkButton = createButton({ className: 'button modal-button__ok', textContent: 'OK' });
+export const createCancelButton = createButton({ className: 'button modal-button__cancel', textContent: 'Cancel' });
