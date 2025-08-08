@@ -1,6 +1,6 @@
 import { dom } from '@utils/dom.js';
 import { reactive } from '@utils/reactive.js';
-import { createBadge, createIcon, createButton } from '@components';
+import { createBadge, createIcon, createCard } from '@components';
 import { cardStore } from '@stores';
 
 export const createList = ({ id, name }) => {
@@ -15,7 +15,8 @@ export const createList = ({ id, name }) => {
   const cardCountElem = createBadge({ textContent: cardStore.getCardsByListId(id).length.toString() });
   const menuButtonElem = dom.create({
     tag: 'button',
-    className: 'list__menu-btn',
+    className: 'list__menu-button',
+    dataset: { action: 'menu' },
     children: [createIcon({ name: 'kebab-menu-horizontal', size: 24, className: 'list__dots-icon', type: 'fill' })],
   });
   menuGroupElem.append(cardCountElem, menuButtonElem);
@@ -23,18 +24,17 @@ export const createList = ({ id, name }) => {
 
   // Create list body
   const bodyElem = dom.create({ tag: 'div', className: 'list__body' });
-  cardStore.getCards().forEach((card) => {
-    if (card.listId === id) {
-      const cardElem = dom.create({ tag: 'div', className: 'card', dataset: { id: card.id } });
-      bodyElem.appendChild(cardElem);
-    }
+  cardStore.getCardsByListId(id).forEach((card) => {
+    const cardElem = createCard({ ...card });
+    bodyElem.appendChild(cardElem);
   });
 
   // Create list footer
   const footerElem = dom.create({ tag: 'div', className: 'list__footer' });
-  const addCardButtonElem = createButton({
-    size: 'md',
+  const addCardButtonElem = dom.create({
+    tag: 'button',
     className: 'list__add-card-button',
+    dataset: { action: 'add-card' },
     children: [
       createIcon({ name: 'plus-sign', size: 20, className: 'list__add-card-button-icon', type: 'stroke' }),
       dom.create({ tag: 'span', textContent: 'Add a card' }),
@@ -50,6 +50,19 @@ export const createList = ({ id, name }) => {
 
   // Register component for cleanup
   reactive.register(rootElem, unsubscribe);
+
+  // Handle list click
+  const handleListClick = (e) => {
+    const clickedElement = e.target.closest('[data-action]');
+    if (!clickedElement || !rootElem.contains(clickedElement)) return;
+
+    const actionName = clickedElement.dataset.action;
+
+    const event = new CustomEvent(`list:${actionName}`, { detail: { listId: id }, bubbles: true, composed: true });
+    rootElem.dispatchEvent(event);
+  };
+
+  rootElem.addEventListener('click', handleListClick);
 
   return rootElem;
 };

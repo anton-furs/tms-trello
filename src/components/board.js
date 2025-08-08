@@ -1,22 +1,63 @@
 import { dom } from '@utils/dom';
 import { reactive } from '@utils/reactive';
-import { createButton, createIcon, createList } from '@components';
+import { createButton, createIcon, createList, createAddListModal } from '@components';
 import { cardStore, listStore } from '@stores';
 
-export const createBoard = ({ id, name }) => {
+export const createBoard = ({ name }) => {
   const rootElem = dom.create({ tag: 'main', className: 'board' });
 
+  const handleListEvents = (e) => {
+    if (e.type === 'list:add-card') {
+      // TODO: open modal for add card
+      console.log('list:add-card');
+    }
+    if (e.type === 'list:menu') {
+      // TODO: open dropdown for list menu
+      console.log('list:menu');
+    }
+  };
+
+  const handleCardEvents = (e) => {
+    if (e.type === 'card:delete') {
+      // TODO: delete single card
+      console.log('card:delete');
+    }
+    if (e.type === 'card:edit') {
+      // TODO: open modal for edit card
+      console.log('card:edit');
+    }
+    if (e.type === 'card:move-left') {
+      // TODO: move card to the left
+      console.log('card:move-left');
+    }
+    if (e.type === 'card:move-right') {
+      // TODO: move card to the right
+      console.log('card:move-right');
+    }
+  };
+
   const handleClearAll = () => {
-    cardStore.removeAllCards();
+    // TODO: open modal to confirm clear all
   };
 
   const handleClearDone = () => {
-    cardStore.removeCardsByListName('Done');
+    // TODO: open modal to confirm clear done
+    //cardStore.removeCardsByListName('Done');
+    console.log('board:clear-done');
   };
 
-  const handleOpenAddListModal = () => {
-    const event = new CustomEvent('addList', { detail: { boardId: id } });
-    rootElem.dispatchEvent(event);
+  const handleAddList = () => {
+    console.log('board:add-list');
+    // TODO: open modal for add list
+    const modal = createAddListModal();
+    document.body.appendChild(modal);
+    modal.showModal();
+    modal.addEventListener('modal:confirm', (e) => {
+      console.log('modal:confirm');
+    });
+    modal.addEventListener('modal:cancel', (e) => {
+      console.log('modal:cancel');
+    });
   };
 
   // Create header
@@ -25,10 +66,8 @@ export const createBoard = ({ id, name }) => {
 
   // Create button group
   const buttonGroupElem = dom.create({ tag: 'div', className: 'board__button-group' });
-
   const clearAllButtonElem = createButton({ size: 'md', className: 'board__button', textContent: 'Clear all' });
   clearAllButtonElem.addEventListener('click', handleClearAll);
-
   const clearDoneButtonElem = createButton({ size: 'md', className: 'board__button', textContent: 'Clear done' });
   clearDoneButtonElem.addEventListener('click', handleClearDone);
 
@@ -39,12 +78,9 @@ export const createBoard = ({ id, name }) => {
   const canvasElem = dom.create({ tag: 'div', className: 'board__canvas' });
   const listsElem = dom.create({ tag: 'div', className: 'board__lists' });
 
-  // TODO: Create lists from listStore
+  // Create lists
   listStore.getLists().forEach((list) => {
-    const listElem = createList({
-      id: list.id,
-      name: list.name,
-    });
+    const listElem = createList({ ...list });
     listsElem.appendChild(listElem);
   });
 
@@ -56,7 +92,7 @@ export const createBoard = ({ id, name }) => {
       dom.create({ tag: 'span', textContent: 'Add another list' }),
     ],
   });
-  addListButtonElem.addEventListener('click', handleOpenAddListModal);
+  addListButtonElem.addEventListener('click', handleAddList);
   canvasElem.append(listsElem, addListButtonElem);
 
   rootElem.append(headerElem, canvasElem);
@@ -69,6 +105,13 @@ export const createBoard = ({ id, name }) => {
   // Register component for cleanup
   // TODO: check if it's correct to register rootElem
   reactive.register(rootElem, unsubscribe);
+
+  listsElem.addEventListener('list:add-card', handleListEvents);
+  listsElem.addEventListener('list:menu', handleListEvents);
+  listsElem.addEventListener('card:delete', handleCardEvents);
+  listsElem.addEventListener('card:edit', handleCardEvents);
+  listsElem.addEventListener('card:move-left', handleCardEvents);
+  listsElem.addEventListener('card:move-right', handleCardEvents);
 
   return rootElem;
 };

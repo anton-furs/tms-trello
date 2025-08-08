@@ -1,30 +1,35 @@
 import { dom } from '@utils/dom';
-import { generateUniqueId } from '@utils/nanoid';
-import { createCancelButton } from '@components';
 
-export const createModal = ({ title: title, bodyModal = [], footerModal = [], footerButton = [], style: style }) => {
-  const titleModal = dom.create({ tag: 'p', className: 'modal-header__title', textContent: title });
-  const header = dom.create({ tag: 'div', className: 'modal-header', children: [titleModal] });
-  const body = dom.create({ tag: 'div', className: 'modal-body' });
-  bodyModal.forEach((value) => body.appendChild(value));
-  const footerModalButton = dom.create({ tag: 'div', className: 'modal-footer__button', children: [buttonCancel] });
-  footerButton.forEach((value) => footerModalButton.appendChild(value));
-  const footerModalBlock = dom.create({ tag: 'div', className: 'modal-footer', children: [footerModalButton] });
-  footerModal.forEach((value) => footerModalBlock.appendChild(value));
-  style = style ? `modal ${style}` : 'modal';
-  const modalWindow = dom.create({
-    tag: 'dialog',
-    className: style,
-    attributes: { id: generateUniqueId() },
-    children: [header, body, footerModalBlock],
+export const createModalBase = ({ title, body = [], footer = [] }) => {
+  const rootElem = dom.create({ tag: 'dialog', className: 'modal' });
+
+  // Create content container
+  const contentElem = dom.create({ tag: 'div', className: 'modal__content' });
+
+  // Create header
+  const headerElem = dom.create({ tag: 'div', className: 'modal__header' });
+  const titleElem = dom.create({ tag: 'p', className: 'modal__header-title', textContent: title });
+  headerElem.appendChild(titleElem);
+
+  // Create body
+  const bodyElem = dom.create({ tag: 'div', className: 'modal__body' });
+  body.forEach((value) => bodyElem.appendChild(value));
+
+  // Create footer
+  const footerElem = dom.create({ tag: 'div', className: 'modal__footer' });
+  footer.forEach((value) => footerElem.appendChild(value));
+
+  contentElem.append(headerElem, bodyElem, footerElem);
+
+  rootElem.addEventListener('click', (e) => {
+    if (e.target === rootElem) {
+      rootElem.close();
+    }
+  });
+  rootElem.addEventListener('close', () => {
+    rootElem.remove();
   });
 
-  // Events
-  const closeModal = () => {
-    modalWindow.close();
-    modalWindow.remove();
-  };
-  createCancelButton.addEventListener('click', closeModal);
-
-  return modalWindow;
+  rootElem.append(contentElem);
+  return rootElem;
 };

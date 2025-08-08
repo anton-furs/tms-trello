@@ -4,7 +4,6 @@
   width: 100%;
   flex: 1;
   @include flex(column);
-  overflow-x: auto;
   background-color: #babdc9;
 
   &__header {
@@ -22,6 +21,7 @@
   }
 
   &__button {
+    border-radius: 8px;
     color: $color-cool-gray-900;
     background-color: $color-cool-gray-200;
 
@@ -41,6 +41,7 @@
     padding: 12px;
     flex: 1;
     @include flex(row, $gap: 12px);
+    overflow-x: auto;
   }
 
   &__lists {

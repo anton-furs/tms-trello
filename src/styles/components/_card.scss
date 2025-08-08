@@ -3,71 +3,74 @@
 .card {
   // Card component styles
   width: 325px;
-  box-shadow: 0 2px 0 0 $color-cool-gray-400;
+  box-shadow: 0 2px 0 0 color-mix(in oklch, $color-cool-gray-900 12%, transparent);
   border-radius: 8px;
 
-  &-content{
+  &-content {
     @include flex(row, $justify: center);
     height: 172px;
-    padding: 2px;
+    padding: 4px;
 
-    &__arrow{
+    &__arrow {
       width: 18px;
       height: 100%;
       background-color: $color-cool-gray-100;
-      border-radius: 8px;
+      border-radius: 4px;
       display: none;
       cursor: pointer;
 
-      &-icon{
+      &-icon {
         color: $color-cool-gray-400;
       }
     }
 
-    &__body{
+    &__body {
       @include flex(column, $justify: space-between, $gap: 16px);
       padding: 12px;
       height: 100%;
       width: 100%;
 
-      &-block{
+      &-block {
         @include flex(row, $justify: space-between, $align: flex-start);
         width: 100%;
 
-        &__title{
-          @include text('sm', 'medium', 18px);
+        &__title {
           width: 100%;
+          @include text('sm', 'medium');
           @include line-clamp(2);
+          letter-spacing: -0.01em;
         }
 
-        &__delete{
+        &__delete {
           display: none;
+          width: 24px;
+          height: 24px;
           border-radius: 4px;
 
-          &:hover{
+          &:hover {
             background-color: $color-cool-gray-100;
           }
 
-          &-icon{
-            &:active{
+          &-icon {
+            &:active {
               color: $color-cool-gray-900;
             }
           }
         }
       }
 
-
-      &-text{
-        @include text('xs', 'medium', 16px);
+      &-text {
         width: 100%;
+        @include text('xs', 'medium');
         @include line-clamp(3);
+        letter-spacing: -0.01em;
       }
 
-      &-info{
+      &-info {
         @include flex(row, $justify: space-between, $align: flex-end);
         width: 100%;
 
-        &__user{
+        &__user {
           @include flex($justify: center, $align: center);
           width: 24px;
           height: 24px;
@@ -77,7 +80,7 @@
           @include text('2xs', 'medium');
         }
 
-        &__date{
+        &__date {
           @include text('xs', 'medium', 16px);
           color: $color-cool-gray-400;
         }
@@ -85,18 +88,20 @@
     }
   }
 
-  &:hover{
-    box-shadow: inset 0 0 0 2px $color-cool-gray-900;
-    
-    .card-content__arrow{
+  &:hover {
+    box-shadow:
+      0 2px 0 0 color-mix(in oklch, $color-cool-gray-900 12%, transparent),
+      inset 0 0 0 2px $color-cool-gray-900;
+
+    .card-content__arrow {
       @include flex($align: center);
     }
 
-    .card-content__body{
+    .card-content__body {
       cursor: pointer;
     }
 
-    .card-content__body-block__delete{
+    .card-content__body-block__delete {
       @include flex(row, $justify: center, $align: center);
     }
   }

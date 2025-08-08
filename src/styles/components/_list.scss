@@ -28,13 +28,11 @@
     @include flex(row, $align: center, $gap: 8px);
   }
 
-  &__menu-btn {
+  &__menu-button {
     width: 32px;
     height: 32px;
     @include flex(row, center, center);
-    border: none;
     border-radius: 8px;
-    cursor: pointer;
     background-color: transparent;
 
     &:hover {
@@ -69,6 +67,8 @@
   &__add-card-button {
     width: 100%;
     padding: 8px 8px;
+    border-radius: 8px;
+    @include flex(row, $align: center, $gap: 8px);
     @include text('sm', 'medium');
     color: $color-cool-gray-600;
 

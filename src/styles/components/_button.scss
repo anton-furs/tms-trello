@@ -2,7 +2,6 @@
 
 .button {
   @include flex(row, $align: center, $gap: 8px);
-  border-radius: 8px;
 
   &--sm {
     min-height: 24px;
