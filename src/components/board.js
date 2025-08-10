@@ -42,7 +42,8 @@ export const createBoard = ({ name }) => {
       const modalAddCard = createAddEditModal(
         'Edit card', 
         card.title,
-        card.description);
+        card.description,
+        card.assignee);
       document.body.appendChild(modalAddCard);
       modalAddCard.showModal();
       modalAddCard.addEventListener('modal:confirm', (elem) => {

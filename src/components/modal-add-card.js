@@ -2,16 +2,34 @@ import { dom } from '@utils/dom';
 import { createModalBase } from '@components/modal-base';
 import { createTextArea } from '@components/textarea';
 import { createInput } from '@components/input';
-import { createCard, formatUser } from '@components/card';
-import { getUsers } from '../api/users.js';
+import { users } from '../api/users.js';
+import { createIcon } from '@components';
 
-export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText, card = {}) => {
-  const users = getUsers();
-  console.log(users);
+
+export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText, assignee) => {
   const modalInput = createInput({value: bodyTitle});
   const modatTextArea = createTextArea(bodyText);
-  const user = '';
   const buttonGroup = dom.create({ tag: 'div', className: 'modal__button-group' });
+  const selectBlock = dom.create({ 
+    tag: 'select', 
+    className: 'modal-add-card__select'
+  });
+  
+  const iconSelect = createIcon({ name: 'unfold-more', size: 20, className: 'list__add-card-button-icon', type: 'stroke' });
+  const optionUsers = dom.create({ tag: 'div', className: 'modal-add-card__select-option' });
+  selectBlock.append(optionUsers);
+  users.forEach(elem => {
+    const selectOption = dom.create({ 
+      tag: 'option',
+      className: 'modal-add-card__select-option__name',
+      attributes: {'value': elem}, 
+      textContent: elem
+    });
+      if (assignee === elem){
+        selectOption.setAttribute('selected', 'selected');
+      }
+     optionUsers.append(selectOption);
+  })
   const buttonOk = dom.create({
     tag: 'button',
     textContent: 'Confirm',
@@ -28,8 +46,9 @@ export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText
   const modalAddCard = createModalBase({
     title: cardTitle,
     body: [modalInput, modatTextArea],
-    footer: [buttonGroup],
+    footer: [selectBlock, buttonGroup],
   });
+
 
   const handleButtonGroupClick = (e) => {
     const clickedElement = e.target.closest('[data-action]');
@@ -41,7 +60,7 @@ export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText
       detail: {
         title: modalInput.value,
         description: modatTextArea.value,
-        assignee: ''
+        assignee: selectBlock.value
       },
       bubbles: true,
       composed: true,
@@ -53,19 +72,5 @@ export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText
 
   modalAddCard.addEventListener('click', handleButtonGroupClick);
 
-  const cardAddEdit = (event) => {
-    if (card.idCard) {
-      const titleCard = document.getElementById(card.idTitle);
-      titleCard.textContent = modalInput.value;
-      const textCard = document.getElementById(card.idText);
-      textCard.textContent = modatTextArea.value;
-      const userCard = document.getElementById(card.idUser);
-      userCard.textContent = user ? formatUser(user) : '';
-    } else {
-      const cardNew = createCard({ title: modalInput.value, text: modatTextArea.value, user: user ? user : '' });
-    }
-    modalAddCard.remove();
-  };
-  //buttonOk.addEventListener('click', cardAddEdit, { once: true });
   return modalAddCard;
 };
