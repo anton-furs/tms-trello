@@ -1,7 +1,6 @@
-import { dom } from '@utils/dom';
-import { reactive } from '@utils/reactive';
-import { createButton, createIcon, createList, createAddListModal } from '@components';
-import { boardStore, cardStore, listStore } from '@stores';
+import { dom, sync, reactive } from '@utils';
+import { createButton, createIcon, createList, createAddListModal, createConfirmModal } from '@components';
+import { boardStore, listStore, cardStore } from '@stores';
 
 export const createBoard = ({ name }) => {
   const rootElem = dom.create({ tag: 'main', className: 'board' });
@@ -15,6 +14,7 @@ export const createBoard = ({ name }) => {
       // TODO: open dropdown for list menu
       console.log('list:menu');
     }
+    // TODO: remove event listeners
   };
 
   const handleCardEvents = (e) => {
@@ -37,28 +37,36 @@ export const createBoard = ({ name }) => {
   };
 
   const handleClearAll = () => {
-    // TODO: open modal to confirm clear all
+    const modal = createConfirmModal({
+      title: 'Clear all cards',
+      message: 'Are you sure you want to delete tasks? This action cannot be undone.',
+    });
+    document.body.appendChild(modal);
+    modal.showModal();
+    modal.addEventListener('modal:confirm', () => {
+      cardStore.removeAllCards();
+    });
   };
 
   const handleClearDone = () => {
-    // TODO: open modal to confirm clear done
-    //cardStore.removeCardsByListName('Done');
-    console.log('board:clear-done');
+    const modal = createConfirmModal({
+      title: 'Clear done cards',
+      message: 'Are you sure you want to delete done tasks? This action cannot be undone.',
+    });
+    document.body.appendChild(modal);
+    modal.showModal();
+    modal.addEventListener('modal:confirm', () => {
+      cardStore.removeCardsByListName('Done');
+    });
   };
 
   const handleAddList = () => {
-    console.log('board:add-list');
-    // TODO: open modal for add list
     const modal = createAddListModal();
     document.body.appendChild(modal);
     modal.showModal();
     modal.addEventListener('modal:confirm', (e) => {
       const data = e.detail;
       listStore.addList({ boardId: boardStore.getBoard().id, ...data });
-      console.log('modal:confirm', data);
-    });
-    modal.addEventListener('modal:cancel', (e) => {
-      console.log('modal:cancel');
     });
   };
 
@@ -101,7 +109,7 @@ export const createBoard = ({ name }) => {
 
   // Subscribe to cards store
   const unsubscribe = listStore.subscribe((state) => {
-    dom.lists.update(listsElem, state);
+    sync.lists.update(listsElem, state);
   });
 
   // Register component for cleanup

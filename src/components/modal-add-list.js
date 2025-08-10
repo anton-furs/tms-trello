@@ -1,8 +1,10 @@
 import { dom } from '@utils/dom';
-import { createInput, createModalBase } from '@components';
+import { createInput, createModalBase, createColorSelector } from '@components';
 
 export const createAddListModal = (value) => {
-  const inputElem = createInput({ value: value || '', placeholder: 'List name' });
+  const nameInputElem = createInput({ value: value || '', placeholder: 'List name' });
+
+  const colorSelectorElem = createColorSelector({ value: 'cool-gray' });
 
   const buttonGroupElem = dom.create({ tag: 'div', className: 'modal__button-group' });
   const confirmButtonElem = dom.create({
@@ -21,8 +23,9 @@ export const createAddListModal = (value) => {
 
   const modal = createModalBase({
     title: 'Add new list',
-    body: [inputElem],
-    footer: [buttonGroupElem],
+    body: [nameInputElem],
+    footer: [colorSelectorElem, buttonGroupElem],
+    variant: 'entry',
   });
 
   const handleButtonGroupClick = (e) => {
@@ -30,11 +33,12 @@ export const createAddListModal = (value) => {
     if (!clickedElement || !modal.contains(clickedElement)) return;
 
     const actionName = clickedElement.dataset.action;
+    const colorInputElem = colorSelectorElem.querySelector('input[name="color"]:checked');
 
     const event = new CustomEvent(`modal:${actionName}`, {
       detail: {
-        name: inputElem.value,
-        color: 'cool-gray',
+        name: nameInputElem.value,
+        color: colorInputElem.value,
       },
       bubbles: true,
       composed: true,

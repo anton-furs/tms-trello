@@ -1,3 +1,46 @@
+@use '../abstracts' as *;
+
 .dropdown-menu {
-  // Dropdown menu component styles
+  position: relative;
+  @include flex(column, $gap: 4px);
+
+  &__trigger {
+    width: 32px;
+    height: 32px;
+    @include flex(row, center, center);
+    border-radius: 8px;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-cool-gray-300;
+
+      .dropdown-menu__dots-icon {
+        color: $color-cool-gray-500;
+      }
+    }
+  }
+
+  &__dots-icon {
+    color: $color-cool-gray-400;
+  }
+
+  &__content {
+    position: absolute;
+    z-index: 100;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 128px;
+    height: 112px;
+    border-radius: 8px;
+    padding: 8px;
+    @include flex(column, $gap: 4px);
+    background-color: $color-white;
+    box-shadow: 0 2px 40px 0 oklch(0 0 0 / 0.15);
+    display: none;
+
+    &[data-open='true'] {
+      display: block;
+    }
+  }
 }

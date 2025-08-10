@@ -8,3 +8,6 @@ export { createCard } from './card.js';
 export { createAddListModal } from './modal-add-list.js';
 export { createInput } from './input.js';
 export { createModalBase } from './modal-base.js';
+export { createColorSelector } from './color-selector.js';
+export { createDropdownMenu } from './dropdown-menu.js';
+export { createConfirmModal } from './modal-confirm.js';

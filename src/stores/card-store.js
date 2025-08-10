@@ -15,7 +15,11 @@ export const cardStore = {
   // Notify subscribers about card changes
   notify: (listId, state) => {
     cardStore.subscribers.forEach((subscriber) => {
-      if (subscriber.listId === listId) subscriber.callback(state);
+      if (listId) {
+        if (subscriber.listId === listId) subscriber.callback(state);
+      } else {
+        subscriber.callback(state);
+      }
     });
   },
 
@@ -69,6 +73,10 @@ export const cardStore = {
 
   // Remove all cards
   removeAllCards: () => {
+    const lists = appStore.getState().lists;
     appStore.setState({ cards: [] });
+    lists.forEach((list) => {
+      cardStore.notify(list.id, []);
+    });
   },
 };
