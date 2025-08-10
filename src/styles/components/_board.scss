@@ -1,84 +1,59 @@
 @use '../abstracts' as *;
 
+
 .board {
   width: 100%;
   flex: 1;
   @include flex(column);
   background-color: #babdc9;
-
-  &__header {
-    width: 100%;
-    padding: 0 12px;
-    height: 56px;
-    @include flex(row, $align: center, $justify: flex-start);
-    background-color: oklch(18.6% 0.04405 273.4 / 0.1);
-    filter: multiply;
-    backdrop-filter: blur(20px);
-    position: relative;
-    gap: 8px;
-  }
-
-  &__button-group {
-    margin-left: auto;
-    @include flex(row, $gap: 8px);
-    &.is-open {
-      position: absolute;
-      top: 56px; right: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 8px;
-      border-radius: 8px;
-      background: oklch(18.6% 0.04405 273.4 / 0.98);
-      box-shadow: 0 12px 24px oklch(18.6% 0.04405 273.4 / 0.35);
-      z-index: 20;
-    }
-  }
-  &__burger {
-    display: none; 
-    margin-left: auto;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    padding: 8px;
-    width: 40px; height: 40px; border-radius: 8px;
-
-       svg { width: 24px; height: 24px; stroke: $color-white; fill: none; stroke-width: 2; }
-  
-  }
-  @media (max-width: 1024px) {
-    &__button-group { display: none; }
-    &__button-group.is-open { display: flex; }
-    &__burger { display: inline-flex; align-items: center; justify-content: center; } 
-  }
-  
-  &__button {
-    border-radius: 8px;
-    color: $color-cool-gray-900;
-    background-color: $color-cool-gray-200;
-
-    &:hover {
-      background-color: $color-cool-gray-100;
-    }
-  }
-
-  &__name {
-    color: $color-white;
-    @include text('lg', 'medium');
-    letter-spacing: -0.01em;
-  }
+  min-width: 0;
+  overflow-x: hidden;
 
   &__canvas {
     width: 100%;
+    min-width: 0;
     padding: 12px;
     flex: 1;
     @include flex(row, $gap: 12px);
     overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: oklch(64% 0.030921 274 / .7) transparent;
     // overscroll-behavior: contain;
     // scrollbar-width: contain;
     // scrollbar-color: oklch(87% 0.012731 274) oklch(64% 0.030921 274);
     scrollbar-color: oklch(64% 0.030921 274) transparent;
     scrollbar-gutter: stable both-edges;
+
+     &::-webkit-scrollbar {
+    height: 10px; /* толщина */
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 999px;
+    margin: 6px; /* чтобы трек не упирался в края */
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: oklch(64% 0.030921 274 / .7); /* мягкий, как на втором скрине */
+    border-radius: 999px;
+    border: 3px solid transparent;  /* визуально «пухлый» бегунок */
+    background-clip: padding-box;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: oklch(60% 0.030921 274 / .9); /* чуть контрастнее при ховере */
+  }
+  /* скрываем стрелочки на концах (как на скрине 2) */
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  /* чтобы скролл не «протекал» к body при упоре */
+  overscroll-behavior-x: contain;
+  &::-webkit-scrollbar-thumb { background-color: oklch(64% 0.030921 274 / .35); }
+  &:hover::-webkit-scrollbar-thumb { background-color: oklch(60% 0.030921 274 / .9); }
   }
   &__lists {
     width: fit-content;

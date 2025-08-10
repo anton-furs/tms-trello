@@ -1,7 +1,7 @@
 import { dom } from '@utils/dom';
 
-export const createModalBase = ({ title, body = [], footer = [] }) => {
-  const rootElem = dom.create({ tag: 'dialog', className: 'modal' });
+export const createModalBase = ({ title, body = [], footer = [], variant = 'entry' }) => {
+  const rootElem = dom.create({ tag: 'dialog', className: `modal modal--${variant}` });
 
   // Create content container
   const contentElem = dom.create({ tag: 'div', className: 'modal__content' });
