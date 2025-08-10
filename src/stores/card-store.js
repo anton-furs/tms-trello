@@ -54,14 +54,24 @@ export const cardStore = {
 
   // Update card { title, description, assignee }
   updateCard: (id, updates) => {
+    const listId = appStore.getState().cards.find((card) => card.id === id).listId;
     appStore.setState({
       cards: appStore.getState().cards.map((card) => (card.id === id ? { ...card, ...updates } : card)),
     });
+    cardStore.notify(
+      listId,
+      appStore.getState().cards.filter((card) => card.listId === listId)
+    );
   },
 
   // Remove card
   removeCard: (id) => {
+    const listId = appStore.getState().cards.find((card) => card.id === id).listId;
     appStore.setState({ cards: appStore.getState().cards.filter((card) => card.id !== id) });
+    cardStore.notify(
+      listId,
+      appStore.getState().cards.filter((card) => card.listId === listId)
+    );
   },
 
   // Remove all cards by list name
@@ -69,6 +79,10 @@ export const cardStore = {
     const list = appStore.getState().lists.find((list) => list.name === listName);
     if (!list) return;
     appStore.setState({ cards: appStore.getState().cards.filter((card) => card.listId !== list.id) });
+    cardStore.notify(
+      list.id,
+      appStore.getState().cards.filter((card) => card.listId === list.id)
+    );
   },
 
   // Remove all cards
@@ -76,7 +90,10 @@ export const cardStore = {
     const lists = appStore.getState().lists;
     appStore.setState({ cards: [] });
     lists.forEach((list) => {
-      cardStore.notify(list.id, []);
+      cardStore.notify(
+        list.id,
+        appStore.getState().cards.filter((card) => card.listId === list.id)
+      );
     });
   },
 };
