@@ -6,6 +6,7 @@ import unfoldMore from '@assets/icons/svg/unfold-more.svg?raw';
 import chevronLeft from '@assets/icons/svg/chevron-left-01.svg?raw';
 import chevronRight from '@assets/icons/svg/chevron-right-01.svg?raw';
 import kebabMenuHorizontal from '@assets/icons/svg/kebab-menu-horizontal.svg?raw';
+import checkMark from '@assets/icons/svg/check-mark.svg?raw';
 
 const icons = {
   'delete-bin': deleteBin,
@@ -14,6 +15,7 @@ const icons = {
   'unfold-more': unfoldMore,
   'chevron-left': chevronLeft,
   'chevron-right': chevronRight,
+  'check-mark': checkMark,
 };
 
 export const createIcon = ({ svg, name = 'delete-bin', size = 24, className = '', type = 'fill' }) => {

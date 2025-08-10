@@ -1,7 +1,7 @@
 @use '../abstracts' as *;
 
 .modal {
-  width: 560px;
+  max-width: 560px;
   height: fit-content;
   @include flex(column, $gap: 16px);
   border-radius: 16px;
@@ -10,6 +10,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: $color-white;
+
+  &--entry {
+    width: 560px;
+  }
+
+  &--confirm {
+    width: 360px;
+  }
 
   &__content {
     width: 100%;
@@ -35,11 +43,15 @@
 
   &__footer {
     width: 100%;
-    @include flex(row, $align: center);
+    @include flex(row, $justify: flex-end, $align: center);
+
+    &:has(> *:nth-child(2)) {
+      justify-content: space-between;
+    }
   }
 
   &__button-group {
-    width: 100%;
+    width: fit-content;
     @include flex(row, $gap: 8px);
   }
 

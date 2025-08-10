@@ -1,6 +1,5 @@
-import { dom } from '@utils/dom.js';
-import { reactive } from '@utils/reactive.js';
-import { createBadge, createIcon, createCard } from '@components';
+import { dom, sync, reactive } from '@utils';
+import { createBadge, createIcon, createCard, createDropdownMenu } from '@components';
 import { cardStore } from '@stores';
 
 export const createList = ({ id, name }) => {
@@ -13,13 +12,8 @@ export const createList = ({ id, name }) => {
   // Create list menu group
   const menuGroupElem = dom.create({ tag: 'div', className: 'list__menu-group' });
   const cardCountElem = createBadge({ textContent: cardStore.getCardsByListId(id).length.toString() });
-  const menuButtonElem = dom.create({
-    tag: 'button',
-    className: 'list__menu-button',
-    dataset: { action: 'menu' },
-    children: [createIcon({ name: 'kebab-menu-horizontal', size: 24, className: 'list__dots-icon', type: 'fill' })],
-  });
-  menuGroupElem.append(cardCountElem, menuButtonElem);
+  const dropdownMenuElem = createDropdownMenu();
+  menuGroupElem.append(cardCountElem, dropdownMenuElem);
   headerElem.append(titleElem, menuGroupElem);
 
   // Create list body
@@ -45,7 +39,7 @@ export const createList = ({ id, name }) => {
 
   // Subscribe to cards store
   const unsubscribe = cardStore.subscribe(id, (state) => {
-    dom.cards.update(bodyElem, state, id);
+    sync.cards.update(bodyElem, state);
   });
 
   // Register component for cleanup
