@@ -3,9 +3,11 @@ import { createModalBase } from '@components/modal-base';
 import { createTextArea } from '@components/textarea';
 import { createInput } from '@components/input';
 import { createCard, formatUser } from '@components/card';
-import { listStore } from '../stores/list-store';
+import { getUsers } from '../api/users.js';
 
 export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText, card = {}) => {
+  const users = getUsers();
+  console.log(users);
   const modalInput = createInput({value: bodyTitle});
   const modatTextArea = createTextArea(bodyText);
   const user = '';
