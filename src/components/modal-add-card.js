@@ -3,6 +3,7 @@ import { createModalBase } from '@components/modal-base';
 import { createTextArea } from '@components/textarea';
 import { createInput } from '@components/input';
 import { createCard, formatUser } from '@components/card';
+import { listStore } from '../stores/list-store';
 
 export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText, card = {}) => {
   const modalInput = createInput({value: bodyTitle});

@@ -6,6 +6,7 @@ import {
   createAddListModal,
   createConfirmModal,
   createBoardHeader,
+  createAddEditModal,
 } from '@components';
 import { boardStore, listStore, cardStore } from '@stores';
 
@@ -15,7 +16,13 @@ export const createBoard = ({ name }) => {
   const handleListEvents = (e) => {
     if (e.type === 'list:add-card') {
       // TODO: open modal for add card
-      console.log('list:add-card');
+      const modalAddCard = createAddEditModal();
+      document.body.appendChild(modalAddCard);
+      modalAddCard.showModal();
+      modalAddCard.addEventListener('modal:confirm', (elem) => {
+        const data = elem.detail;
+        cardStore.addCard({listId: e.detail.listId,  ...data });
+      });
     }
     if (e.type === 'list:menu') {
       // TODO: open dropdown for list menu
@@ -27,11 +34,21 @@ export const createBoard = ({ name }) => {
   const handleCardEvents = (e) => {
     if (e.type === 'card:delete') {
       // TODO: delete single card
-      console.log('card:delete');
+      cardStore.removeCard(e.detail.cardId);
     }
     if (e.type === 'card:edit') {
       // TODO: open modal for edit card
-      console.log('card:edit');
+      const card = cardStore.getCardById(e.detail.cardId);
+      const modalAddCard = createAddEditModal(
+        'Edit card', 
+        card.title,
+        card.description);
+      document.body.appendChild(modalAddCard);
+      modalAddCard.showModal();
+      modalAddCard.addEventListener('modal:confirm', (elem) => {
+        const data = elem.detail;
+        cardStore.updateCard(card.id, data);
+      });
     }
     if (e.type === 'card:move-left') {
       // TODO: move card to the left
