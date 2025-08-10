@@ -1,12 +1,13 @@
 import { createList, createCard } from '@components';
+import { cardStore } from '@stores';
 
 export const sync = {
   // Methods to update the list element
   list: {
     badge: {
-      update: (element, listId) => {
-        const badgeElem = element.closest('.list').querySelector('.badge');
-        const cardCount = cardsStore.getCardsByListId(listId).length;
+      update: (listElem) => {
+        const badgeElem = listElem.querySelector('.badge');
+        const cardCount = cardStore.getCardsByListId(listElem.dataset.id).length;
         badgeElem.textContent = cardCount.toString();
       },
     },
@@ -54,6 +55,7 @@ export const sync = {
   // Methods to update the cards
   cards: {
     update: (element, state) => {
+      const listElem = element.closest('.list');
       const currentCards = Array.from(element.querySelectorAll('.card'));
 
       // Add cards
@@ -61,15 +63,15 @@ export const sync = {
         if (!currentCards.some((c) => c.dataset.id === card.id)) {
           const cardElem = createCard({ ...card });
           element.appendChild(cardElem);
-          sync.list.badge.update(cardElem, card.listId);
+          sync.list.badge.update(listElem);
         }
       });
 
       // Remove card
       currentCards.forEach((cardElem) => {
         if (!state.some((card) => card.id === cardElem.dataset.id)) {
+          sync.list.badge.update(listElem);
           cardElem.remove();
-          sync.list.badge.update(cardElem, card.listId);
         }
       });
     },

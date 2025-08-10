@@ -1,6 +1,7 @@
 export { createIcon } from './icon.js';
 export { createHeader } from './header.js';
 export { createBoard } from './board.js';
+export { createBoardHeader } from './board-header.js';
 export { createList } from './list.js';
 export { createBadge } from './badge.js';
 export { createButton, createOkButton, createCancelButton } from './button.js';
@@ -8,4 +9,6 @@ export { createCard } from './card.js';
 export { createAddListModal } from './modal-add-list.js';
 export { createInput } from './input.js';
 export { createModalBase } from './modal-base.js';
-export { createAddEditModal } from './modal-add-card.js';
+export { createColorSelector } from './color-selector.js';
+export { createDropdownMenu } from './dropdown-menu.js';
+export { createConfirmModal } from './modal-confirm.js';

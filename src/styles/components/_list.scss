@@ -7,6 +7,14 @@
   padding: 8px;
   border-radius: 12px;
   background-color: $color-cool-gray-200;
+
+  &--dragging {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.9;
+    transform: rotate(2deg);
+  }
 }
 
 // List Header
@@ -26,26 +34,6 @@
 
   &__menu-group {
     @include flex(row, $align: center, $gap: 8px);
-  }
-
-  &__menu-button {
-    width: 32px;
-    height: 32px;
-    @include flex(row, center, center);
-    border-radius: 8px;
-    background-color: transparent;
-
-    &:hover {
-      background-color: $color-cool-gray-300;
-
-      .list__dots-icon {
-        color: $color-cool-gray-500;
-      }
-    }
-  }
-
-  &__dots-icon {
-    color: $color-cool-gray-400;
   }
 }
 

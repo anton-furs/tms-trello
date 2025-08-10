@@ -1,7 +1,13 @@
-import { dom } from '@utils/dom';
-import { reactive } from '@utils/reactive';
-import { createButton, createIcon, createList, createAddListModal, createAddEditModal } from '@components';
-import { boardStore, cardStore, listStore } from '@stores';
+import { dom, sync, reactive } from '@utils';
+import {
+  createButton,
+  createIcon,
+  createList,
+  createAddListModal,
+  createConfirmModal,
+  createBoardHeader,
+} from '@components';
+import { boardStore, listStore, cardStore } from '@stores';
 
 export const createBoard = ({ name }) => {
   const rootElem = dom.create({ tag: 'main', className: 'board' });
@@ -10,22 +16,12 @@ export const createBoard = ({ name }) => {
     if (e.type === 'list:add-card') {
       // TODO: open modal for add card
       console.log('list:add-card');
-      const modalAddCard = createAddEditModal();
-      document.body.appendChild(modalAddCard);
-      modalAddCard.showModal();
-      modalAddCard.addEventListener('modal:confirm', (e) => {
-        const data = e.detail;
-        cardStore.addCard({ boardId: boardStore.getBoard().id, ...data });
-        console.log('modal:confirm', data);
-      });
-      modalAddCard.addEventListener('modal:cancel', (e) => {
-        console.log('modal:cancel');
-      });
     }
     if (e.type === 'list:menu') {
       // TODO: open dropdown for list menu
       console.log('list:menu');
     }
+    // TODO: remove event listeners
   };
 
   const handleCardEvents = (e) => {
@@ -48,44 +44,41 @@ export const createBoard = ({ name }) => {
   };
 
   const handleClearAll = () => {
-    // TODO: open modal to confirm clear all
+    const modal = createConfirmModal({
+      title: 'Clear all cards',
+      message: 'Are you sure you want to delete tasks? This action cannot be undone.',
+    });
+    document.body.appendChild(modal);
+    modal.showModal();
+    modal.addEventListener('modal:confirm', () => {
+      cardStore.removeAllCards();
+    });
   };
 
   const handleClearDone = () => {
-    // TODO: open modal to confirm clear done
-    //cardStore.removeCardsByListName('Done');
-    console.log('board:clear-done');
+    const modal = createConfirmModal({
+      title: 'Clear done cards',
+      message: 'Are you sure you want to delete done tasks? This action cannot be undone.',
+    });
+    document.body.appendChild(modal);
+    modal.showModal();
+    modal.addEventListener('modal:confirm', () => {
+      cardStore.removeCardsByListName('Done');
+    });
   };
 
   const handleAddList = () => {
-    console.log('board:add-list');
-    // TODO: open modal for add list
     const modal = createAddListModal();
     document.body.appendChild(modal);
     modal.showModal();
     modal.addEventListener('modal:confirm', (e) => {
       const data = e.detail;
       listStore.addList({ boardId: boardStore.getBoard().id, ...data });
-      console.log('modal:confirm', data);
-    });
-    modal.addEventListener('modal:cancel', (e) => {
-      console.log('modal:cancel');
     });
   };
 
   // Create header
-  const headerElem = dom.create({ tag: 'div', className: 'board__header' });
-  const titleElem = dom.create({ tag: 'p', className: 'board__name', textContent: name });
-
-  // Create button group
-  const buttonGroupElem = dom.create({ tag: 'div', className: 'board__button-group' });
-  const clearAllButtonElem = createButton({ size: 'md', className: 'board__button', textContent: 'Clear all' });
-  clearAllButtonElem.addEventListener('click', handleClearAll);
-  const clearDoneButtonElem = createButton({ size: 'md', className: 'board__button', textContent: 'Clear done' });
-  clearDoneButtonElem.addEventListener('click', handleClearDone);
-
-  buttonGroupElem.append(clearAllButtonElem, clearDoneButtonElem);
-  headerElem.append(titleElem, buttonGroupElem);
+  const headerElem = createBoardHeader({ name });
 
   // Create canvas with lists and add list button
   const canvasElem = dom.create({ tag: 'div', className: 'board__canvas' });
@@ -112,15 +105,19 @@ export const createBoard = ({ name }) => {
 
   // Subscribe to cards store
   const unsubscribe = listStore.subscribe((state) => {
-    dom.lists.update(listsElem, state);
+    sync.lists.update(listsElem, state);
   });
 
   // Register component for cleanup
   // TODO: check if it's correct to register rootElem
   reactive.register(rootElem, unsubscribe);
 
+  headerElem.addEventListener('board:clear-all', handleClearAll);
+  headerElem.addEventListener('board:clear-done', handleClearDone);
+
   listsElem.addEventListener('list:add-card', handleListEvents);
   listsElem.addEventListener('list:menu', handleListEvents);
+
   listsElem.addEventListener('card:delete', handleCardEvents);
   listsElem.addEventListener('card:edit', handleCardEvents);
   listsElem.addEventListener('card:move-left', handleCardEvents);
