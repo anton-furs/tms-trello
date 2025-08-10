@@ -1,5 +1,12 @@
 import { dom, sync, reactive } from '@utils';
-import { createButton, createIcon, createList, createAddListModal, createConfirmModal } from '@components';
+import {
+  createButton,
+  createIcon,
+  createList,
+  createAddListModal,
+  createConfirmModal,
+  createBoardHeader,
+} from '@components';
 import { boardStore, listStore, cardStore } from '@stores';
 
 export const createBoard = ({ name }) => {
@@ -71,18 +78,7 @@ export const createBoard = ({ name }) => {
   };
 
   // Create header
-  const headerElem = dom.create({ tag: 'div', className: 'board__header' });
-  const titleElem = dom.create({ tag: 'p', className: 'board__name', textContent: name });
-
-  // Create button group
-  const buttonGroupElem = dom.create({ tag: 'div', className: 'board__button-group' });
-  const clearAllButtonElem = createButton({ size: 'md', className: 'board__button', textContent: 'Clear all' });
-  clearAllButtonElem.addEventListener('click', handleClearAll);
-  const clearDoneButtonElem = createButton({ size: 'md', className: 'board__button', textContent: 'Clear done' });
-  clearDoneButtonElem.addEventListener('click', handleClearDone);
-
-  buttonGroupElem.append(clearAllButtonElem, clearDoneButtonElem);
-  headerElem.append(titleElem, buttonGroupElem);
+  const headerElem = createBoardHeader({ name });
 
   // Create canvas with lists and add list button
   const canvasElem = dom.create({ tag: 'div', className: 'board__canvas' });
@@ -116,8 +112,12 @@ export const createBoard = ({ name }) => {
   // TODO: check if it's correct to register rootElem
   reactive.register(rootElem, unsubscribe);
 
+  headerElem.addEventListener('board:clear-all', handleClearAll);
+  headerElem.addEventListener('board:clear-done', handleClearDone);
+
   listsElem.addEventListener('list:add-card', handleListEvents);
   listsElem.addEventListener('list:menu', handleListEvents);
+
   listsElem.addEventListener('card:delete', handleCardEvents);
   listsElem.addEventListener('card:edit', handleCardEvents);
   listsElem.addEventListener('card:move-left', handleCardEvents);
