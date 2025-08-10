@@ -8,3 +8,4 @@ export { createCard } from './card.js';
 export { createAddListModal } from './modal-add-list.js';
 export { createInput } from './input.js';
 export { createModalBase } from './modal-base.js';
+export { createAddEditModal } from './modal-add-card.js';

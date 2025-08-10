@@ -1,6 +1,6 @@
 import { dom } from '@utils/dom';
 import { reactive } from '@utils/reactive';
-import { createButton, createIcon, createList, createAddListModal } from '@components';
+import { createButton, createIcon, createList, createAddListModal, createAddEditModal } from '@components';
 import { boardStore, cardStore, listStore } from '@stores';
 
 export const createBoard = ({ name }) => {
@@ -10,6 +10,17 @@ export const createBoard = ({ name }) => {
     if (e.type === 'list:add-card') {
       // TODO: open modal for add card
       console.log('list:add-card');
+      const modalAddCard = createAddEditModal();
+      document.body.appendChild(modalAddCard);
+      modalAddCard.showModal();
+      modalAddCard.addEventListener('modal:confirm', (e) => {
+        const data = e.detail;
+        cardStore.addCard({ boardId: boardStore.getBoard().id, ...data });
+        console.log('modal:confirm', data);
+      });
+      modalAddCard.addEventListener('modal:cancel', (e) => {
+        console.log('modal:cancel');
+      });
     }
     if (e.type === 'list:menu') {
       // TODO: open dropdown for list menu
