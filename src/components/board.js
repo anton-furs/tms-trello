@@ -37,14 +37,50 @@ export const createBoard = ({ name }) => {
   };
 
   const handleClearAll = () => {
-    // TODO: open modal to confirm clear all
-  };
+  const ok = window.confirm('Delete ALL cards in ALL lists?');
+  if (!ok) return;
+
+  const lists = listStore.getLists?.() || [];
+  for (const list of lists) {
+    // We try to call what is in cardStore
+    if (typeof cardStore?.removeCardsByListId === 'function') {
+      cardStore.removeCardsByListId(list.id);
+    } else if (typeof cardStore?.removeCardsByListName === 'function') {
+      cardStore.removeCardsByListName(list.name);
+    } else if (typeof cardStore?.removeCards === 'function') {
+      // in case of a universal method
+      cardStore.removeCards({ listId: list.id });
+    } else {
+      console.warn('Нет подходящего метода в cardStore для очистки списка:', list);
+    }
+  }
+
+  closeHeaderMenuIfOpen();
+};
 
   const handleClearDone = () => {
-    // TODO: open modal to confirm clear done
-    //cardStore.removeCardsByListName('Done');
-    console.log('board:clear-done');
-  };
+  const lists = listStore.getLists?.() || [];
+  const done = lists.find(l => String(l.name).trim().toLowerCase() === 'done');
+  if (!done) {
+    console.warn('Список "Done" не найден');
+    return closeHeaderMenuIfOpen();
+  }
+
+  const ok = window.confirm('Delete ALL cards in "Done"?');
+  if (!ok) return;
+
+  if (typeof cardStore?.removeCardsByListId === 'function') {
+    cardStore.removeCardsByListId(done.id);
+  } else if (typeof cardStore?.removeCardsByListName === 'function') {
+    cardStore.removeCardsByListName(done.name);
+  } else if (typeof cardStore?.removeCards === 'function') {
+    cardStore.removeCards({ listId: done.id });
+  } else {
+    console.warn('Нет подходящего метода в cardStore для очистки "Done"');
+  }
+
+  closeHeaderMenuIfOpen();
+};
 
   const handleAddList = () => {
     console.log('board:add-list');
@@ -74,7 +110,50 @@ export const createBoard = ({ name }) => {
   clearDoneButtonElem.addEventListener('click', handleClearDone);
 
   buttonGroupElem.append(clearAllButtonElem, clearDoneButtonElem);
-  headerElem.append(titleElem, buttonGroupElem);
+    // === Burger button ===
+  const burgerBtn = dom.create({
+    tag: 'button',
+    className: 'board__burger',
+    attrs: { type: 'button', 'aria-controls': 'board-actions', 'aria-expanded': 'false' },
+  });
+  burgerBtn.innerHTML = `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18"/>
+    </svg>
+  `;
+
+  if (!buttonGroupElem.id) buttonGroupElem.id = 'board-actions';
+
+  const closeMenu = () => {
+    buttonGroupElem.classList.remove('is-open');
+    burgerBtn.setAttribute('aria-expanded', 'false');
+  };
+
+  const closeHeaderMenuIfOpen = () => {
+  const group = buttonGroupElem;           
+  const burger = headerElem.querySelector('.board__burger');
+  if (group?.classList.contains('is-open')) {
+    group.classList.remove('is-open');
+    burger?.setAttribute('aria-expanded', 'false');
+  }
+};
+
+  burgerBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const opened = buttonGroupElem.classList.toggle('is-open');
+    burgerBtn.setAttribute('aria-expanded', String(opened));
+  });
+
+  // click outside - close
+  document.addEventListener('click', (e) => {
+    if (!buttonGroupElem.contains(e.target) && !burgerBtn.contains(e.target)) closeMenu();
+  });
+  // Esc — close
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+  // returned to desktop - close
+  window.addEventListener('resize', () => { if (window.innerWidth > 1024) closeMenu(); });
+
+  headerElem.append(titleElem, buttonGroupElem, burgerBtn);
 
   // Create canvas with lists and add list button
   const canvasElem = dom.create({ tag: 'div', className: 'board__canvas' });
