@@ -8,6 +8,8 @@
   background-color: oklch(18.6% 0.04405 273.4 / 0.1);
   filter: multiply;
   backdrop-filter: blur(20px);
+  position: relative;     
+  z-index: 1000;  
 
   &__name {
     color: $color-white;
@@ -32,4 +34,73 @@
       background-color: $color-cool-gray-100;
     }
   }
+  &__menu-mobile {
+    display: none;
+    position: relative;
+
+    .burger-btn {
+      width: 40px;
+      height: 40px;
+      @include flex(row, $align: center, $justify: center);
+      border: 0 !important;
+      background: transparent !important;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: none !important;
+      outline: none;
+      appearance: none;
+      padding: 0;
+      color: $color-white; 
+      svg path { fill: currentColor; }
+
+      &:hover {
+        background: transparent;
+        // background-color: $color-cool-gray-100;
+      }
+    }
+
+    .burger-menu {
+      position: absolute;
+      top: 48px;
+      right: 0;
+      min-width: 160px;
+      background-color: $color-white;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      padding: 4px;
+      z-index: 1010;
+    }
+
+    .burger-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .burger-action {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      @include text('sm', 'medium');
+      border-radius: 6px;
+
+      &:hover {
+        background-color: $color-cool-gray-100;
+      }
+    }
+  }
 }
+
+
+@media (max-width: 768px) {
+  .board-header__button-group {
+    display: none;
+  }
+  .board-header__menu-mobile {
+    display: block;
+  }
+}
+

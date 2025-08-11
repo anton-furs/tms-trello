@@ -1,19 +1,51 @@
 @use '../abstracts' as *;
 
+
 .board {
   width: 100%;
   flex: 1;
   @include flex(column);
   background-color: #babdc9;
+  min-width: 0;
+  overflow-x: hidden;
 
   &__canvas {
     width: 100%;
+    min-width: 0;
     padding: 12px;
     flex: 1;
     @include flex(row, $gap: 12px);
     overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-color: oklch(64% 0.030921 274 / .7) transparent;
+    overscroll-behavior: contain;
+     &::-webkit-scrollbar {
+    height: 10px; 
   }
-
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 999px;
+    margin: 6px; 
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: oklch(64% 0.030921 274 / .7); 
+    border-radius: 999px;
+    border: 3px solid transparent;  
+    background-clip: padding-box;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: oklch(60% 0.030921 274 / .9); 
+  }
+  
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb { background-color: oklch(64% 0.030921 274 / .35); }
+  &:hover::-webkit-scrollbar-thumb { background-color: oklch(60% 0.030921 274 / .9); }
+  }
   &__lists {
     width: fit-content;
     @include flex(row, $gap: 12px);
