@@ -1,6 +1,5 @@
 @use '../abstracts' as *;
 
-
 .board {
   width: 100%;
   flex: 1;
@@ -8,6 +7,7 @@
   background-color: #babdc9;
   min-width: 0;
   overflow-x: hidden;
+  padding-bottom: 12px;
 
   &__canvas {
     width: 100%;
@@ -17,34 +17,25 @@
     @include flex(row, $gap: 12px);
     overflow-x: auto;
     overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    scrollbar-color: oklch(64% 0.030921 274 / .7) transparent;
-    overscroll-behavior: contain;
-     &::-webkit-scrollbar {
-    height: 10px; 
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 999px;
-    margin: 6px; 
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: oklch(64% 0.030921 274 / .7); 
-    border-radius: 999px;
-    border: 3px solid transparent;  
-    background-clip: padding-box;
-  }
-  &:hover::-webkit-scrollbar-thumb {
-    background-color: oklch(60% 0.030921 274 / .9); 
-  }
-  
-  &::-webkit-scrollbar-button {
-    width: 0;
-    height: 0;
-    display: none;
-  }
-  &::-webkit-scrollbar-thumb { background-color: oklch(64% 0.030921 274 / .35); }
-  &:hover::-webkit-scrollbar-thumb { background-color: oklch(60% 0.030921 274 / .9); }
+
+    &::-webkit-scrollbar {
+      height: 12px;
+      margin: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: color-mix(in oklch, $color-cool-gray-900 20%, transparent);
+    }
+
+    &::-webkit-scrollbar-track {
+      margin: 12px;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-cool-gray-200;
+      border-radius: 4px;
+    }
   }
   &__lists {
     width: fit-content;
