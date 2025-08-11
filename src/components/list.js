@@ -54,6 +54,7 @@ export const createList = ({ id, name }) => {
   const handleListClick = (e) => {
     const clickedElement = e.target.closest('[data-action]');
     if (!clickedElement || !rootElem.contains(clickedElement)) return;
+    if (clickedElement.closest('.card')) return;
 
     const actionName = clickedElement.dataset.action;
 
