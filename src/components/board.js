@@ -17,11 +17,28 @@ export const createBoard = ({ name }) => {
       // TODO: open modal for add card
       console.log('list:add-card');
     }
-    if (e.type === 'list:menu') {
-      // TODO: open dropdown for list menu
-      console.log('list:menu');
+    if (e.type === 'list:edit') {
+      const list = listStore.getListById(e.detail.listId);
+      const modal = createAddListModal(list.name);
+      document.body.appendChild(modal);
+      modal.showModal();
+      modal.addEventListener('modal:confirm', (e) => {
+        const data = e.detail;
+        listStore.updateList(list.id, data);
+      });
     }
-    // TODO: remove event listeners
+    if (e.type === 'list:delete') {
+      const list = listStore.getListById(e.detail.listId);
+      const modal = createConfirmModal({
+        title: 'Delete list',
+        message: `Are you sure you want to delete list "${list.name}"? This action cannot be undone.`,
+      });
+      document.body.appendChild(modal);
+      modal.showModal();
+      modal.addEventListener('modal:confirm', () => {
+        listStore.removeList(list.id);
+      });
+    }
   };
 
   const handleCardEvents = (e) => {
@@ -43,28 +60,29 @@ export const createBoard = ({ name }) => {
     }
   };
 
-  const handleClearAll = () => {
-    const modal = createConfirmModal({
-      title: 'Clear all cards',
-      message: 'Are you sure you want to delete tasks? This action cannot be undone.',
-    });
-    document.body.appendChild(modal);
-    modal.showModal();
-    modal.addEventListener('modal:confirm', () => {
-      cardStore.removeAllCards();
-    });
-  };
-
-  const handleClearDone = () => {
-    const modal = createConfirmModal({
-      title: 'Clear done cards',
-      message: 'Are you sure you want to delete done tasks? This action cannot be undone.',
-    });
-    document.body.appendChild(modal);
-    modal.showModal();
-    modal.addEventListener('modal:confirm', () => {
-      cardStore.removeCardsByListName('Done');
-    });
+  const handleBoardHeaderEvents = (e) => {
+    if (e.type === 'board:clear-all') {
+      const modal = createConfirmModal({
+        title: 'Clear all cards',
+        message: 'Are you sure you want to delete tasks? This action cannot be undone.',
+      });
+      document.body.appendChild(modal);
+      modal.showModal();
+      modal.addEventListener('modal:confirm', () => {
+        cardStore.removeAllCards();
+      });
+    }
+    if (e.type === 'board:clear-done') {
+      const modal = createConfirmModal({
+        title: 'Clear done cards',
+        message: 'Are you sure you want to delete done tasks? This action cannot be undone.',
+      });
+      document.body.appendChild(modal);
+      modal.showModal();
+      modal.addEventListener('modal:confirm', () => {
+        cardStore.removeCardsByListName('Done');
+      });
+    }
   };
 
   const handleAddList = () => {
@@ -78,7 +96,7 @@ export const createBoard = ({ name }) => {
   };
 
   // Create header
-  const headerElem = createBoardHeader({ name });
+  const boardHeaderElem = createBoardHeader({ name });
 
   // Create canvas with lists and add list button
   const canvasElem = dom.create({ tag: 'div', className: 'board__canvas' });
@@ -101,22 +119,27 @@ export const createBoard = ({ name }) => {
   addListButtonElem.addEventListener('click', handleAddList);
   canvasElem.append(listsElem, addListButtonElem);
 
-  rootElem.append(headerElem, canvasElem);
+  rootElem.append(boardHeaderElem, canvasElem);
 
   // Subscribe to cards store
-  const unsubscribe = listStore.subscribe((state) => {
-    sync.lists.update(listsElem, state);
+  const unsubscribe = listStore.subscribe((state, operation, listId) => {
+    if (operation === 'update' && listId) {
+      sync.list.content.update(listsElem, state, listId);
+    } else {
+      sync.lists.update(listsElem, state);
+    }
   });
 
   // Register component for cleanup
   // TODO: check if it's correct to register rootElem
   reactive.register(rootElem, unsubscribe);
 
-  headerElem.addEventListener('board:clear-all', handleClearAll);
-  headerElem.addEventListener('board:clear-done', handleClearDone);
+  boardHeaderElem.addEventListener('board:clear-all', handleBoardHeaderEvents);
+  boardHeaderElem.addEventListener('board:clear-done', handleBoardHeaderEvents);
 
   listsElem.addEventListener('list:add-card', handleListEvents);
-  listsElem.addEventListener('list:menu', handleListEvents);
+  listsElem.addEventListener('list:edit', handleListEvents);
+  listsElem.addEventListener('list:delete', handleListEvents);
 
   listsElem.addEventListener('card:delete', handleCardEvents);
   listsElem.addEventListener('card:edit', handleCardEvents);

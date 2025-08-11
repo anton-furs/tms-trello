@@ -11,9 +11,9 @@ export const listStore = {
   },
 
   // Notify
-  notify: (state) => {
+  notify: (state, operation = 'update', listId = null) => {
     listStore.subscribers.forEach((callback) => {
-      callback(state);
+      callback(state, operation, listId);
     });
   },
 
@@ -32,7 +32,7 @@ export const listStore = {
       color,
     };
     appStore.setState({ lists: [...appStore.getState().lists, list] });
-    listStore.notify(appStore.getState().lists);
+    listStore.notify(appStore.getState().lists, 'add', list.id);
   },
 
   // Update list { name, color }
@@ -40,12 +40,12 @@ export const listStore = {
     appStore.setState({
       lists: appStore.getState().lists.map((list) => (list.id === id ? { ...list, ...updates } : list)),
     });
-    listStore.notify(appStore.getState().lists);
+    listStore.notify(appStore.getState().lists, 'update', id);
   },
 
   // Remove list by id
   removeList: (id) => {
     appStore.setState({ lists: appStore.getState().lists.filter((list) => list.id !== id) });
-    listStore.notify(appStore.getState().lists);
+    listStore.notify(appStore.getState().lists, 'remove', id);
   },
 };
