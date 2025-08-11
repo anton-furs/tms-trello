@@ -51,7 +51,15 @@ export const createBoard = ({ name }) => {
   const handleCardEvents = (e) => {
     if (e.type === 'card:delete') {
       // TODO: delete single card
-      cardStore.removeCard(e.detail.cardId);
+      const modal = createConfirmModal({
+        title: 'Delete card',
+        message: 'Are you sure you want to delete this task? This action cannot be undone.',
+      });
+      document.body.appendChild(modal);
+      modal.showModal();
+      modal.addEventListener('modal:confirm', () => {
+        cardStore.removeCard(e.detail.cardId);
+      });
     }
     if (e.type === 'card:edit') {
       // TODO: open modal for edit card
