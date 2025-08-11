@@ -18,40 +18,31 @@
     overflow-x: auto;
     overflow-y: hidden;
     overscroll-behavior-x: contain;
-    scrollbar-width: thin;
     scrollbar-color: oklch(64% 0.030921 274 / .7) transparent;
-    // overscroll-behavior: contain;
-    // scrollbar-width: contain;
-    // scrollbar-color: oklch(87% 0.012731 274) oklch(64% 0.030921 274);
-    scrollbar-color: oklch(64% 0.030921 274) transparent;
-    scrollbar-gutter: stable both-edges;
-
+    overscroll-behavior: contain;
      &::-webkit-scrollbar {
-    height: 10px; /* толщина */
+    height: 10px; 
   }
   &::-webkit-scrollbar-track {
     background: transparent;
     border-radius: 999px;
-    margin: 6px; /* чтобы трек не упирался в края */
+    margin: 6px; 
   }
   &::-webkit-scrollbar-thumb {
-    background-color: oklch(64% 0.030921 274 / .7); /* мягкий, как на втором скрине */
+    background-color: oklch(64% 0.030921 274 / .7); 
     border-radius: 999px;
-    border: 3px solid transparent;  /* визуально «пухлый» бегунок */
+    border: 3px solid transparent;  
     background-clip: padding-box;
   }
   &:hover::-webkit-scrollbar-thumb {
-    background-color: oklch(60% 0.030921 274 / .9); /* чуть контрастнее при ховере */
+    background-color: oklch(60% 0.030921 274 / .9); 
   }
-  /* скрываем стрелочки на концах (как на скрине 2) */
+  
   &::-webkit-scrollbar-button {
     width: 0;
     height: 0;
     display: none;
   }
-
-  /* чтобы скролл не «протекал» к body при упоре */
-  overscroll-behavior-x: contain;
   &::-webkit-scrollbar-thumb { background-color: oklch(64% 0.030921 274 / .35); }
   &:hover::-webkit-scrollbar-thumb { background-color: oklch(60% 0.030921 274 / .9); }
   }
