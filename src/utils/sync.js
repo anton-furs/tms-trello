@@ -11,11 +11,13 @@ export const sync = {
         badgeElem.textContent = cardCount.toString();
       },
     },
-    name: {
-      update: () => {},
-    },
-    color: {
-      update: () => {},
+    content: {
+      update: (element, state, listId) => {
+        const listElem = element.querySelector(`[data-id="${listId}"]`);
+        const list = state.find((list) => list.id === listId);
+        const nameElem = listElem.querySelector('.list__name');
+        nameElem.textContent = list.name;
+      },
     },
   },
 

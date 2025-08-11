@@ -2,6 +2,11 @@ import { dom, sync, reactive } from '@utils';
 import { createBadge, createIcon, createCard, createDropdownMenu } from '@components';
 import { cardStore } from '@stores';
 
+const ACTION_OPTIONS = [
+  { action: 'edit', label: 'Edit' },
+  { action: 'delete', label: 'Delete' },
+];
+
 export const createList = ({ id, name }) => {
   const rootElem = dom.create({ tag: 'div', className: 'list', dataset: { id } });
 
@@ -12,7 +17,7 @@ export const createList = ({ id, name }) => {
   // Create list menu group
   const menuGroupElem = dom.create({ tag: 'div', className: 'list__menu-group' });
   const cardCountElem = createBadge({ textContent: cardStore.getCardsByListId(id).length.toString() });
-  const dropdownMenuElem = createDropdownMenu();
+  const dropdownMenuElem = createDropdownMenu({ title: 'List actions', options: ACTION_OPTIONS });
   menuGroupElem.append(cardCountElem, dropdownMenuElem);
   headerElem.append(titleElem, menuGroupElem);
 
