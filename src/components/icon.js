@@ -7,6 +7,7 @@ import chevronLeft from '@assets/icons/svg/chevron-left-01.svg?raw';
 import chevronRight from '@assets/icons/svg/chevron-right-01.svg?raw';
 import kebabMenuHorizontal from '@assets/icons/svg/kebab-menu-horizontal.svg?raw';
 import checkMark from '@assets/icons/svg/check-mark.svg?raw';
+import menu01 from '@assets/icons/svg/menu-01.svg?raw';
 
 const icons = {
   'delete-bin': deleteBin,
@@ -16,6 +17,7 @@ const icons = {
   'chevron-left': chevronLeft,
   'chevron-right': chevronRight,
   'check-mark': checkMark,
+  'menu-01': menu01,
 };
 
 export const createIcon = ({ svg, name = 'delete-bin', size = 24, className = '', type = 'fill' }) => {
