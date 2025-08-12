@@ -9,6 +9,13 @@ export const sync = {
         const badgeElem = listElem.querySelector('.badge');
         const cardCount = cardStore.getCardsByListId(listElem.dataset.id).length;
         badgeElem.textContent = cardCount.toString();
+        badgeElem.dataset.color = listElem.dataset.color;
+      },
+    },
+    menu: {
+      update: (listElem) => {
+        const dropdownMenuElem = listElem.querySelector('.dropdown-menu');
+        dropdownMenuElem.dataset.color = listElem.dataset.color;
       },
     },
     content: {
@@ -17,6 +24,11 @@ export const sync = {
         const list = state.find((list) => list.id === listId);
         const nameElem = listElem.querySelector('.list__name');
         nameElem.textContent = list.name;
+        listElem.dataset.color = list.color;
+
+        // Update badge and menu
+        sync.list.badge.update(listElem);
+        sync.list.menu.update(listElem);
       },
     },
   },
@@ -65,17 +77,18 @@ export const sync = {
         if (!currentCards.some((c) => c.dataset.id === card.id)) {
           const cardElem = createCard({ ...card });
           element.appendChild(cardElem);
-          sync.list.badge.update(listElem);
         }
       });
 
       // Remove card
       currentCards.forEach((cardElem) => {
         if (!state.some((card) => card.id === cardElem.dataset.id)) {
-          sync.list.badge.update(listElem);
           cardElem.remove();
         }
       });
+
+      // Update badge
+      sync.list.badge.update(listElem);
     },
   },
 };

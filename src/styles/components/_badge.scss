@@ -1,6 +1,8 @@
 @use '../abstracts' as *;
 
 .badge {
+  @include generate-css-vars($badge-color-themes);
+
   width: fit-content;
   min-height: 24px;
   @include flex(row, center, center);
@@ -8,28 +10,6 @@
   border-radius: 12px;
   color: $color-white;
   @include text('sm', 'medium');
-
-  &--cool-gray {
-    background-color: $color-cool-gray-400;
-  }
-
-  &--indian-red {
-    background-color: $color-indian-red-400;
-  }
-
-  &--sky-magenta {
-    background-color: $color-sky-magenta-400;
-  }
-
-  &--african-violet {
-    background-color: $color-african-violet-400;
-  }
-
-  &--silver-lake-blue {
-    background-color: $color-silver-lake-blue-400;
-  }
-
-  &--air-force-blue {
-    background-color: $color-air-force-blue-400;
-  }
+  background-color: var(--badge-surface);
+  color: var(--badge-text);
 }
