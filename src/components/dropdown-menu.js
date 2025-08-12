@@ -1,8 +1,8 @@
 import { dom } from '@utils';
 import { createIcon } from '@components';
 
-export const createDropdownMenu = ({ title, options = [] }) => {
-  const rootElem = dom.create({ tag: 'div', className: 'dropdown-menu' });
+export const createDropdownMenu = ({ title, options = [], color = 'cool-gray' }) => {
+  const rootElem = dom.create({ tag: 'div', className: 'dropdown-menu', dataset: { color } });
 
   let isOpen = false;
 

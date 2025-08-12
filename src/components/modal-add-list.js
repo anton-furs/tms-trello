@@ -1,10 +1,10 @@
 import { dom } from '@utils/dom';
 import { createInput, createModalBase, createColorSelector } from '@components';
 
-export const createAddListModal = (value) => {
-  const nameInputElem = createInput({ value: value || '', placeholder: 'List name' });
+export const createAddListModal = ({ title, name, color = 'cool-gray' }) => {
+  const nameInputElem = createInput({ value: name || '', placeholder: 'List name' });
 
-  const colorSelectorElem = createColorSelector({ value: 'cool-gray' });
+  const colorSelectorElem = createColorSelector({ value: color });
 
   const buttonGroupElem = dom.create({ tag: 'div', className: 'modal__button-group' });
   const confirmButtonElem = dom.create({
@@ -22,7 +22,7 @@ export const createAddListModal = (value) => {
   buttonGroupElem.append(cancelButtonElem, confirmButtonElem);
 
   const modal = createModalBase({
-    title: 'Add new list',
+    title: title,
     body: [nameInputElem],
     footer: [colorSelectorElem, buttonGroupElem],
     variant: 'entry',

@@ -1,6 +1,8 @@
 @use '../abstracts' as *;
 
 .dropdown-menu {
+  @include generate-css-vars($dropdown-menu-color-themes);
+
   position: relative;
   @include flex(column, $gap: 4px);
 
@@ -13,16 +15,16 @@
     cursor: pointer;
 
     &:hover {
-      background-color: $color-cool-gray-300;
+      background-color: var(--dropdown-menu-btn-surface-hover);
 
       .dropdown-menu__dots-icon {
-        color: $color-cool-gray-500;
+        color: var(--dropdown-menu-btn-text-hover);
       }
     }
   }
 
   &__dots-icon {
-    color: $color-cool-gray-400;
+    color: var(--dropdown-menu-btn-text);
   }
 
   &__content {

@@ -5,6 +5,7 @@
   width: 325px;
   box-shadow: 0 2px 0 0 color-mix(in oklch, $color-cool-gray-900 12%, transparent);
   border-radius: 8px;
+  background-color: $color-white;
 
   &-content {
     @include flex(row, $justify: center);
