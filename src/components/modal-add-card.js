@@ -1,35 +1,43 @@
 import { dom } from '@utils/dom';
-import { createModalBase } from '@components/modal-base';
-import { createTextArea } from '@components/textarea';
-import { createInput } from '@components/input';
 import { users } from '../api/users.js';
-import { createIcon } from '@components';
+import { createIcon, createTextArea, createInput } from '@components';
 
 
 export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText, assignee) => {
+  const overlay = dom.create({ tag: 'div', className: 'modal-add-card__overlay' });
   const modalInput = createInput({value: bodyTitle});
   const modatTextArea = createTextArea(bodyText);
-  const buttonGroup = dom.create({ tag: 'div', className: 'modal__button-group' });
-  const selectBlock = dom.create({ 
-    tag: 'select', 
-    className: 'modal-add-card__select'
+  const selectTitle = dom.create({ 
+    tag: 'p', 
+    textContent: assignee ? assignee : users[0], 
+    className: 'modal-add-card__select-title'  
   });
-  
-  const iconSelect = createIcon({ name: 'unfold-more', size: 20, className: 'list__add-card-button-icon', type: 'stroke' });
+  const iconSelect = createIcon({ 
+    name: 'unfold-more', 
+    size: 20, 
+    className: 'card-content__arrow-icon', 
+    type: 'stroke' });
   const optionUsers = dom.create({ tag: 'div', className: 'modal-add-card__select-option' });
-  selectBlock.append(optionUsers);
+  const selectBlock = dom.create({ 
+    tag: 'div', 
+    className: 'modal-add-card__select',
+    children: [selectTitle, iconSelect, optionUsers]
+  });
   users.forEach(elem => {
     const selectOption = dom.create({ 
-      tag: 'option',
+      tag: 'p',
       className: 'modal-add-card__select-option__name',
       attributes: {'value': elem}, 
       textContent: elem
     });
-      if (assignee === elem){
-        selectOption.setAttribute('selected', 'selected');
-      }
-     optionUsers.append(selectOption);
+    selectOption.addEventListener('click', (event) =>{
+      selectTitle.textContent = elem;
+      optionUsers.style.display = 'none';
+      event.stopPropagation();
+    })
+    optionUsers.append(selectOption);
   })
+
   const buttonOk = dom.create({
     tag: 'button',
     textContent: 'Confirm',
@@ -42,14 +50,43 @@ export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText
     className: 'modal__button modal__button--tinted',
     dataset: { action: 'cancel' },
   });
-  buttonGroup.append(buttonCancel, buttonOk);
-  const modalAddCard = createModalBase({
-    title: cardTitle,
-    body: [modalInput, modatTextArea],
-    footer: [selectBlock, buttonGroup],
+  const buttonGroup = dom.create({ 
+    tag: 'div', 
+    className: 'modal__button-group', 
+    children: [buttonCancel, buttonOk]
   });
-
-
+  const titleElem = dom.create({ 
+    tag: 'p', 
+    className: 'modal__header-title', 
+    textContent: cardTitle 
+  });
+  const headerElem = dom.create({ 
+    tag: 'div', 
+    className: 'modal__header',
+    children: [titleElem] 
+  });
+  const bodyElem = dom.create({ 
+    tag: 'div', 
+    className: 'modal__body',
+    children: [modalInput, modatTextArea] 
+  });
+  const footerElem = dom.create({ 
+    tag: 'div', 
+    className: 'modal__footer',
+    children: [selectBlock, buttonGroup] 
+  });
+  const contentElem = dom.create({ 
+    tag: 'div', 
+    className: 'modal__content',
+    children: [headerElem, bodyElem, footerElem]
+  });
+  const modalAddCard = dom.create({ 
+    tag: 'div', 
+    className: `modal modal--entry modal-add-card`,
+    children: [contentElem] 
+  });
+  
+  // Events
   const handleButtonGroupClick = (e) => {
     const clickedElement = e.target.closest('[data-action]');
     if (!clickedElement || !modalAddCard.contains(clickedElement)) return;
@@ -60,17 +97,48 @@ export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText
       detail: {
         title: modalInput.value,
         description: modatTextArea.value,
-        assignee: selectBlock.value
+        assignee: selectTitle.textContent
       },
       bubbles: true,
       composed: true,
     });
     modalAddCard.dispatchEvent(event);
-    modalAddCard.close();
-    modalAddCard.remove();
+    overlay.remove();
   };
+
+  const actionShow = (e) => {
+    const styleOption = window.getComputedStyle(optionUsers);    
+    if(styleOption.display === 'none'){
+      optionUsers.style.display = 'block';
+    }
+    else{
+      optionUsers.style.display = 'none';
+    }
+    e.stopPropagation();
+  }
+  
+  selectBlock.addEventListener('click', actionShow);
 
   modalAddCard.addEventListener('click', handleButtonGroupClick);
 
-  return modalAddCard;
+  document.addEventListener('click', (e) => {
+    const styleOption = window.getComputedStyle(optionUsers);
+    if(!optionUsers.contains(e.target) && styleOption.display !== 'none'){
+      optionUsers.style.display = 'none';
+    }
+  })
+ 
+  overlay.addEventListener('click', (e) => {
+    if(!modalAddCard.contains(e.target)){
+      overlay.remove();
+    }
+  })
+  
+  overlay.append(modalAddCard);
+
+  return overlay;
 };
+
+export const showAddEditCard = (element) => {
+  element.style.display = 'block';
+}

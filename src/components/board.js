@@ -7,6 +7,7 @@ import {
   createConfirmModal,
   createBoardHeader,
   createAddEditModal,
+  showAddEditCard
 } from '@components';
 import { boardStore, listStore, cardStore } from '@stores';
 
@@ -15,10 +16,9 @@ export const createBoard = ({ name }) => {
 
   const handleListEvents = (e) => {
     if (e.type === 'list:add-card') {
-      // TODO: open modal for add card
       const modalAddCard = createAddEditModal();
       document.body.appendChild(modalAddCard);
-      modalAddCard.showModal();
+      showAddEditCard(modalAddCard);
       modalAddCard.addEventListener('modal:confirm', (elem) => {
         const data = elem.detail;
         cardStore.addCard({listId: e.detail.listId,  ...data });
@@ -50,7 +50,6 @@ export const createBoard = ({ name }) => {
 
   const handleCardEvents = (e) => {
     if (e.type === 'card:delete') {
-      // TODO: delete single card
       const modal = createConfirmModal({
         title: 'Delete card',
         message: 'Are you sure you want to delete this task? This action cannot be undone.',
@@ -62,7 +61,6 @@ export const createBoard = ({ name }) => {
       });
     }
     if (e.type === 'card:edit') {
-      // TODO: open modal for edit card
       const card = cardStore.getCardById(e.detail.cardId);
       const modalAddCard = createAddEditModal(
         'Edit card', 
@@ -70,7 +68,7 @@ export const createBoard = ({ name }) => {
         card.description,
         card.assignee);
       document.body.appendChild(modalAddCard);
-      modalAddCard.showModal();
+      showAddEditCard(modalAddCard);
       modalAddCard.addEventListener('modal:confirm', (elem) => {
         const data = elem.detail;
         cardStore.updateCard(card.id, data);

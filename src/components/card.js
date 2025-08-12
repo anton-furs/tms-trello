@@ -1,11 +1,7 @@
 import dayjs from 'dayjs';
 import { dom } from '@utils/dom';
 import { createIcon } from '@components';
-import { listStore } from '@stores';
-//import { createAddEditModal } from '@components/modal-add-card';
-//import { cardsStore } from '@stores/cards-store';
-// import { generateUniqueId } from '@utils/nanoid';
-//import { createModalConfirm } from '@components/modal-confirm';
+import { cardStore } from '@stores';
 
 export const formatUser = (userName) => {
   const arrayWord = userName.split(' ');
@@ -15,9 +11,7 @@ export const formatUser = (userName) => {
 
 export const createCard = ({ id, title, description, assignee, createdAt }) => {
   const rootElem = dom.create({ tag: 'div', className: 'card', dataset: { id } });
-
   const createdAtFormated = dayjs(createdAt).format('MMMM D, YYYY');
-
   const moveLeftButtonElem = dom.create({
     tag: 'div',
     className: 'card-content__arrow',
@@ -96,6 +90,45 @@ export const createCard = ({ id, title, description, assignee, createdAt }) => {
     className: 'card-content',
     children: [moveLeftButtonElem, cardBodyElem, moveRightButton],
   });
+
+  // functions change style for hover cards
+  const addStyleClass = (element = []) => {
+    element.forEach(elem => elem.classList.add('card-content__arrow-hover'));
+  }
+  const removeStyleClass = (element = []) => {
+    element.forEach(elem => elem.classList.remove('card-content__arrow-hover'));
+  }
+  const hoverArrow = (event) => {
+    const arrList = document.querySelectorAll('.list');
+    let arrCardStart = cardStore.getCardsByListId(arrList[0].dataset.id);
+    arrCardStart = arrCardStart.map(elem => elem.id);
+    let arrCardEnd = cardStore.getCardsByListId(arrList[arrList.length-1].dataset.id);
+    arrCardEnd = arrCardEnd.map(elem => elem.id);
+    if(event.type === 'mouseenter') {
+      if (arrCardStart.includes(rootElem.dataset.id)){
+        addStyleClass([moveRightButton]);
+      }
+      else if (arrCardEnd.includes(rootElem.dataset.id)){
+        addStyleClass([moveLeftButtonElem]);
+      }
+      else {
+        addStyleClass([moveLeftButtonElem, moveRightButton]);
+      }
+    }
+    else if (event.type === 'mouseleave'){
+      if (arrCardStart.includes(rootElem.dataset.id)){
+        removeStyleClass([moveRightButton]);
+      }
+      else if (arrCardEnd.includes(rootElem.dataset.id)){
+        removeStyleClass([moveLeftButtonElem]);
+      }
+      else {
+        removeStyleClass([moveLeftButtonElem, moveRightButton]);
+      }
+    }
+  }
+  rootElem.addEventListener('mouseenter', hoverArrow);
+  rootElem.addEventListener('mouseleave', hoverArrow);
 
   // Handle card click
   const handleCardClick = (e) => {
