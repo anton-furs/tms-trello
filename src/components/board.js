@@ -26,7 +26,7 @@ export const createBoard = ({ name }) => {
     }
     if (e.type === 'list:edit') {
       const list = listStore.getListById(e.detail.listId);
-      const modal = createAddListModal(list.name);
+      const modal = createAddListModal({ title: 'Edit list', ...list });
       document.body.appendChild(modal);
       modal.showModal();
       modal.addEventListener('modal:confirm', (e) => {
@@ -112,7 +112,7 @@ export const createBoard = ({ name }) => {
   };
 
   const handleAddList = () => {
-    const modal = createAddListModal();
+    const modal = createAddListModal({ title: 'Add new list' });
     document.body.appendChild(modal);
     modal.showModal();
     modal.addEventListener('modal:confirm', (e) => {

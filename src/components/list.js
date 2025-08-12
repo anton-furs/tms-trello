@@ -7,8 +7,8 @@ const ACTION_OPTIONS = [
   { action: 'delete', label: 'Delete' },
 ];
 
-export const createList = ({ id, name }) => {
-  const rootElem = dom.create({ tag: 'div', className: 'list', dataset: { id } });
+export const createList = ({ id, name, color = 'cool-gray' }) => {
+  const rootElem = dom.create({ tag: 'div', className: 'list', dataset: { id, color } });
 
   // Create list header
   const headerElem = dom.create({ tag: 'div', className: 'list__header' });
@@ -16,8 +16,8 @@ export const createList = ({ id, name }) => {
 
   // Create list menu group
   const menuGroupElem = dom.create({ tag: 'div', className: 'list__menu-group' });
-  const cardCountElem = createBadge({ textContent: cardStore.getCardsByListId(id).length.toString() });
-  const dropdownMenuElem = createDropdownMenu({ title: 'List actions', options: ACTION_OPTIONS });
+  const cardCountElem = createBadge({ label: cardStore.getCardsByListId(id).length.toString(), color });
+  const dropdownMenuElem = createDropdownMenu({ title: 'List actions', options: ACTION_OPTIONS, color });
   menuGroupElem.append(cardCountElem, dropdownMenuElem);
   headerElem.append(titleElem, menuGroupElem);
 
@@ -54,6 +54,7 @@ export const createList = ({ id, name }) => {
   const handleListClick = (e) => {
     const clickedElement = e.target.closest('[data-action]');
     if (!clickedElement || !rootElem.contains(clickedElement)) return;
+    if (clickedElement.closest('.card')) return;
 
     const actionName = clickedElement.dataset.action;
 

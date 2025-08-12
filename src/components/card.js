@@ -18,32 +18,34 @@ export const createCard = ({ id, title, description, assignee, createdAt }) => {
 
   const createdAtFormated = dayjs(createdAt).format('MMMM D, YYYY');
 
-  const moveLeftIcon = createIcon({
-    name: 'chevron-left',
-    size: 18,
-    className: 'card-content__arrow-icon',
-    type: 'stroke',
-  });
-  const moveLeftButton = dom.create({
+  const moveLeftButtonElem = dom.create({
     tag: 'div',
     className: 'card-content__arrow',
     dataset: { action: 'move-left' },
-    children: [moveLeftIcon],
+    children: [
+      createIcon({
+        name: 'chevron-left',
+        size: 18,
+        className: 'card-content__arrow-icon',
+        type: 'stroke',
+      }),
+    ],
   });
 
   const titleElem = dom.create({ tag: 'div', className: 'card-content__body-block__title', textContent: title });
 
-  const deleteCardIcon = createIcon({
-    name: 'delete-bin',
-    size: 18,
-    className: 'card-content__arrow-icon card-content__body-block__delete-icon',
-    type: 'stroke',
-  });
   const deleteCardButton = dom.create({
     tag: 'div',
     className: 'card-content__body-block__delete',
     dataset: { action: 'delete' },
-    children: [deleteCardIcon],
+    children: [
+      createIcon({
+        name: 'delete-bin',
+        size: 18,
+        className: 'card-content__arrow-icon card-content__body-block__delete-icon',
+        type: 'stroke',
+      }),
+    ],
   });
 
   const titleBlockElem = dom.create({
@@ -75,43 +77,25 @@ export const createCard = ({ id, title, description, assignee, createdAt }) => {
     children: [titleBlockElem, descriptionElem, infoElem],
   });
 
-  const moveRightIcon = createIcon({
-    name: 'chevron-right',
-    size: 18,
-    className: 'card-content__arrow-icon',
-    type: 'stroke',
-  });
   const moveRightButton = dom.create({
     tag: 'div',
     className: 'card-content__arrow',
     dataset: { action: 'move-right' },
-    children: [moveRightIcon],
+    children: [
+      createIcon({
+        name: 'chevron-right',
+        size: 18,
+        className: 'card-content__arrow-icon',
+        type: 'stroke',
+      }),
+    ],
   });
 
   const cardContent = dom.create({
     tag: 'div',
     className: 'card-content',
-    children: [moveLeftButton, cardBodyElem, moveRightButton],
+    children: [moveLeftButtonElem, cardBodyElem, moveRightButton],
   });
-
-  // Events
-  // bodyCard.addEventListener('click', (event) => {
-  //   const clickedElement = event.target;
-  //   if (clickedElement.tagName === 'DIV') {
-  //     const modalWin = createAddEditModal('Edit card', titleCard.textContent, textCard.textContent, {
-  //       idCard: card.id,
-  //       idUser: userCard.id,
-  //       idTitle: titleCard.id,
-  //       idText: textCard.id,
-  //     });
-  //     card.append(modalWin);
-  //     modalWin.showModal();
-  //   } else {
-  //     const modalConfirm = createModalConfirm(idCard);
-  //     card.append(modalConfirm);
-  //     modalConfirm.showModal();
-  //   }
-  // });
 
   // Handle card click
   const handleCardClick = (e) => {
