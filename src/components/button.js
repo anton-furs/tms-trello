@@ -12,5 +12,5 @@ export const createButton = ({ type = 'button', size = 'md', className, textCont
   return buttonElem;
 };
 
-export const createOkButton = createButton({ className: 'button modal-button__ok', textContent: 'OK' });
+export const createOkButton = createButton({ className: 'modal-button modal-button--solid', textContent: 'OK' });
 export const createCancelButton = createButton({ className: 'button modal-button__cancel', textContent: 'Cancel' });

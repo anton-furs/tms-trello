@@ -1,3 +1,48 @@
+@use '../abstracts' as *;
+
 .modal-add-card {
   // Modal add card component styles
+  &__select{
+    appearance: none;
+    border: none;
+    border-radius: 8px;
+    width: 192px;
+    height: 40px;
+    background-color: $color-cool-gray-100;
+    color: $color-air-force-blue-900;
+    @include text('sm', 'medium');
+    @include flex($justify: space-between, $align: center);
+    padding: 12px;
+    text-align: center;  
+
+    &-option{
+      text-align: start;
+      padding: 8px;
+      border-radius: 8px;
+      box-shadow: 0 2px 40px 0;
+      background-color: $color-white;
+      width: 192px;
+      
+      &:hover{
+          background-color: $color-cool-gray-100;
+          color: $color-cool-gray-900;
+          cursor: pointer;
+        }
+
+      &__name{
+        color:$color-cool-gray-500;
+        @include text('sm', 'medium');
+        width: 100%;
+        border-radius: 6px;
+        padding: 10px;
+
+        &:hover{
+          background-color: $color-cool-gray-100;
+          color: $color-cool-gray-900;
+          cursor: pointer;
+        }
+      }
+    }
+
+  }
 }
