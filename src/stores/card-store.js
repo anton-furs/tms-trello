@@ -13,12 +13,12 @@ export const cardStore = {
   },
 
   // Notify subscribers about card changes
-  notify: (listId, state) => {
+  notify: (listId, state, operation = 'update', cardId = null) => {
     cardStore.subscribers.forEach((subscriber) => {
       if (listId) {
-        if (subscriber.listId === listId) subscriber.callback(state);
+        if (subscriber.listId === listId) subscriber.callback(state, operation, cardId);
       } else {
-        subscriber.callback(state);
+        subscriber.callback(state, operation, cardId);
       }
     });
   },
@@ -47,7 +47,8 @@ export const cardStore = {
     // Notify only the specific list
     cardStore.notify(
       listId,
-      appStore.getState().cards.filter((card) => card.listId === listId)
+      appStore.getState().cards.filter((card) => card.listId === listId),
+      'add'
     );
     return card;
   },
@@ -60,7 +61,9 @@ export const cardStore = {
     });
     cardStore.notify(
       listId,
-      appStore.getState().cards.filter((card) => card.listId === listId)
+      appStore.getState().cards.filter((card) => card.listId === listId),
+      'update',
+      id
     );
   },
 
@@ -70,7 +73,8 @@ export const cardStore = {
     appStore.setState({ cards: appStore.getState().cards.filter((card) => card.id !== id) });
     cardStore.notify(
       listId,
-      appStore.getState().cards.filter((card) => card.listId === listId)
+      appStore.getState().cards.filter((card) => card.listId === listId),
+      'remove'
     );
   },
 
@@ -81,7 +85,8 @@ export const cardStore = {
     appStore.setState({ cards: appStore.getState().cards.filter((card) => card.listId !== list.id) });
     cardStore.notify(
       list.id,
-      appStore.getState().cards.filter((card) => card.listId === list.id)
+      appStore.getState().cards.filter((card) => card.listId === list.id),
+      'remove'
     );
   },
 
@@ -92,7 +97,8 @@ export const cardStore = {
     lists.forEach((list) => {
       cardStore.notify(
         list.id,
-        appStore.getState().cards.filter((card) => card.listId === list.id)
+        appStore.getState().cards.filter((card) => card.listId === list.id),
+        'remove'
       );
     });
   },
