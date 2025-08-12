@@ -43,8 +43,12 @@ export const createList = ({ id, name, color = 'cool-gray' }) => {
   rootElem.append(headerElem, bodyElem, footerElem);
 
   // Subscribe to cards store
-  const unsubscribe = cardStore.subscribe(id, (state) => {
-    sync.cards.update(bodyElem, state);
+  const unsubscribe = cardStore.subscribe(id, (state, operation, cardId) => {
+    if (operation === 'update' && cardId) {
+      sync.card.content.update(bodyElem, state, cardId);
+    } else {
+      sync.cards.update(bodyElem, state);
+    }
   });
 
   // Register component for cleanup
