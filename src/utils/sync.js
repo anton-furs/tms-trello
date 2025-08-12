@@ -1,5 +1,6 @@
 import { createList, createCard } from '@components';
 import { cardStore } from '@stores';
+import { formatUser } from '@utils';
 
 export const sync = {
   // Methods to update the list element
@@ -19,8 +20,8 @@ export const sync = {
       },
     },
     content: {
-      update: (element, state, listId) => {
-        const listElem = element.querySelector(`[data-id="${listId}"]`);
+      update: (parentElem, state, listId) => {
+        const listElem = parentElem.querySelector(`[data-id="${listId}"]`);
         const list = state.find((list) => list.id === listId);
         const nameElem = listElem.querySelector('.list__name');
         nameElem.textContent = list.name;
@@ -35,14 +36,14 @@ export const sync = {
 
   // Methods to update the lists
   lists: {
-    update: (element, state) => {
-      const currentLists = Array.from(element.querySelectorAll('.list'));
+    update: (parentElem, state) => {
+      const currentLists = Array.from(parentElem.querySelectorAll('.list'));
 
       // Add list
       state.forEach((list) => {
         if (!currentLists.some((listElem) => listElem.dataset.id === list.id)) {
           const listElem = createList({ ...list });
-          element.appendChild(listElem);
+          parentElem.appendChild(listElem);
         }
       });
 
@@ -58,7 +59,16 @@ export const sync = {
   // Methods to update the card element
   card: {
     content: {
-      update: () => {},
+      update: (parentElem, state, cardId) => {
+        const cardElem = parentElem.querySelector(`[data-id="${cardId}"]`);
+        const card = state.find((card) => card.id === cardId);
+
+        if (cardElem) {
+          cardElem.querySelector('.card-content__body-block__title').textContent = card.title;
+          cardElem.querySelector('.card-content__body-text').textContent = card.description;
+          cardElem.querySelector('.card-content__body-info__user').textContent = formatUser(card.assignee);
+        }
+      },
     },
     move: {
       right: () => {},
@@ -68,15 +78,15 @@ export const sync = {
 
   // Methods to update the cards
   cards: {
-    update: (element, state) => {
-      const listElem = element.closest('.list');
-      const currentCards = Array.from(element.querySelectorAll('.card'));
+    update: (parentElem, state) => {
+      const listElem = parentElem.closest('.list');
+      const currentCards = Array.from(parentElem.querySelectorAll('.card'));
 
       // Add cards
       state.forEach((card) => {
         if (!currentCards.some((c) => c.dataset.id === card.id)) {
           const cardElem = createCard({ ...card });
-          element.appendChild(cardElem);
+          parentElem.appendChild(cardElem);
         }
       });
 
