@@ -102,4 +102,40 @@ export const cardStore = {
       );
     });
   },
+
+  // Move card between lists
+  moveCard: (id, direction) => {
+    const card = appStore.getState().cards.find((card) => card.id === id);
+    if (!card) return;
+
+    const lists = appStore.getState().lists;
+    const currentIndex = lists.findIndex((list) => list.id === card.listId);
+    if (currentIndex === -1) return;
+
+    const targetIndex = direction === 'left' ? currentIndex - 1 : currentIndex + 1;
+    if (targetIndex < 0 || targetIndex >= lists.length) return;
+
+    const oldListId = card.listId;
+    const newListId = lists[targetIndex].id;
+
+    appStore.setState({
+      cards: appStore.getState().cards.map((card) => (card.id === id ? { ...card, listId: newListId } : card)),
+    });
+
+    const changedList = appStore.getState().lists.filter((list) => list.id === oldListId || list.id === newListId);
+
+    // Notify both lists
+    changedList.forEach((list) => {
+      cardStore.notify(
+        list.id,
+        appStore.getState().cards.filter((card) => card.listId === list.id),
+        'reorder',
+        id
+      );
+    });
+  },
+
+  // Reorder cards
+  moveCardLeft: (id) => cardStore.moveCard(id, 'left'),
+  moveCardRight: (id) => cardStore.moveCard(id, 'right'),
 };
