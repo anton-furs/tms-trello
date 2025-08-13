@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 import { generateUniqueId } from '@utils/nanoid';
 import { appStore } from '@stores/app-store';
 
+const LIST_LIMITS = { 'In Progress': 5 };
+
 export const cardStore = {
   subscribers: new Set(),
 
@@ -32,6 +34,14 @@ export const cardStore = {
   // Get card by id
   getCardById: (id) => appStore.getState().cards.find((card) => card.id === id),
 
+  // Check list limit
+  isListLimitReached: (listId) => {
+    const list = appStore.getState().lists.find((list) => list.id === listId);
+    const cards = cardStore.getCardsByListId(listId);
+    if (cards.length >= LIST_LIMITS[list.name]) return true;
+    return false;
+  },
+
   // Add a card
   addCard: ({ listId, title, description, assignee }) => {
     const card = {
@@ -42,15 +52,22 @@ export const cardStore = {
       assignee,
       createdAt: dayjs().toISOString(),
     };
-    appStore.setState({ cards: [...appStore.getState().cards, card] });
+    // Add check if list "In Progress" has 3 cards
+    const list = appStore.getState().lists.find((list) => list.id === listId);
+    if (list.name === 'In Progress') {
+      const cards = cardStore.getCardsByListId(listId);
+      if (cards.length >= 3) return;
+    } else {
+      appStore.setState({ cards: [...appStore.getState().cards, card] });
 
-    // Notify only the specific list
-    cardStore.notify(
-      listId,
-      appStore.getState().cards.filter((card) => card.listId === listId),
-      'add'
-    );
-    return card;
+      // Notify only the specific list
+      cardStore.notify(
+        listId,
+        appStore.getState().cards.filter((card) => card.listId === listId),
+        'add'
+      );
+      return card;
+    }
   },
 
   // Update card { title, description, assignee }
@@ -118,6 +135,8 @@ export const cardStore = {
     const oldListId = card.listId;
     const newListId = lists[targetIndex].id;
 
+    if (cardStore.isListLimitReached(newListId)) return true;
+
     appStore.setState({
       cards: appStore.getState().cards.map((card) => (card.id === id ? { ...card, listId: newListId } : card)),
     });
@@ -133,9 +152,6 @@ export const cardStore = {
         id
       );
     });
+    return false;
   },
-
-  // Reorder cards
-  moveCardLeft: (id) => cardStore.moveCard(id, 'left'),
-  moveCardRight: (id) => cardStore.moveCard(id, 'right'),
 };

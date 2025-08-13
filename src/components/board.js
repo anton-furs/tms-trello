@@ -16,10 +16,7 @@ export const createBoard = ({ name }) => {
 
   const handleListEvents = (e) => {
     if (e.type === 'list:add-card') {
-      // Add check if list "In progress" has 3 cards
-      const list = listStore.getListById(e.detail.listId);
-      const cards = cardStore.getCardsByListId(list.id);
-      if (list.name === 'In Progress' && cards.length >= 3) {
+      if (cardStore.isListLimitReached(e.detail.listId)) {
         const modal = createConfirmModal({
           title: 'Too many tasks in progress',
           message: `You can't add more than 10 tasks to the "In Progress" column. Please complete current tasks before starting new ones.`,
@@ -82,13 +79,15 @@ export const createBoard = ({ name }) => {
         cardStore.updateCard(card.id, data);
       });
     }
-    if (e.type === 'card:move-left') {
-      cardStore.moveCardLeft(e.detail.cardId);
-      //console.log('card:move-left');
-    }
-    if (e.type === 'card:move-right') {
-      cardStore.moveCardRight(e.detail.cardId);
-      //console.log('card:move-right');
+    if (e.type === 'card:move') {
+      if (cardStore.moveCard(e.detail.cardId, e.detail.direction)) {
+        const modal = createConfirmModal({
+          title: 'Too many tasks in progress',
+          message: `You can't add more than 10 tasks to the "In Progress" column. Please complete current tasks before starting new ones.`,
+        });
+        document.body.appendChild(modal);
+        modal.showModal();
+      }
     }
   };
 
@@ -175,8 +174,7 @@ export const createBoard = ({ name }) => {
 
   listsElem.addEventListener('card:delete', handleCardEvents);
   listsElem.addEventListener('card:edit', handleCardEvents);
-  listsElem.addEventListener('card:move-left', handleCardEvents);
-  listsElem.addEventListener('card:move-right', handleCardEvents);
+  listsElem.addEventListener('card:move', handleCardEvents);
 
   return rootElem;
 };

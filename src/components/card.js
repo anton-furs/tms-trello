@@ -9,7 +9,7 @@ export const createCard = ({ id, title, description, assignee, createdAt }) => {
   const moveLeftButtonElem = dom.create({
     tag: 'div',
     className: 'card-content__move-button',
-    dataset: { action: 'move-left' },
+    dataset: { action: 'move', direction: 'left' },
     children: [
       createIcon({
         name: 'chevron-left',
@@ -72,7 +72,7 @@ export const createCard = ({ id, title, description, assignee, createdAt }) => {
   const moveRightButton = dom.create({
     tag: 'div',
     className: 'card-content__move-button',
-    dataset: { action: 'move-right' },
+    dataset: { action: 'move', direction: 'right' },
     children: [
       createIcon({
         name: 'chevron-right',
@@ -129,8 +129,18 @@ export const createCard = ({ id, title, description, assignee, createdAt }) => {
     if (!clickedElement || !rootElem.contains(clickedElement)) return;
 
     const actionName = clickedElement.dataset.action;
+    const direction = clickedElement.dataset.direction;
+    const listId = rootElem.closest('.list').dataset.id;
 
-    const event = new CustomEvent(`card:${actionName}`, { detail: { cardId: id }, bubbles: true, composed: true });
+    const event = new CustomEvent(`card:${actionName}`, {
+      detail: {
+        cardId: id,
+        listId: listId,
+        direction: direction,
+      },
+      bubbles: true,
+      composed: true,
+    });
     rootElem.dispatchEvent(event);
   };
   rootElem.addEventListener('click', handleCardClick);
