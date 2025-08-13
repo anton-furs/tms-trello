@@ -89,3 +89,108 @@ $text-weights: (
   'semibold': 600,
   'bold': 700,
 );
+
+$badge-color-themes: (
+  'cool-gray': (
+    'badge-surface': $color-cool-gray-400,
+    'badge-text': $color-white,
+  ),
+  'indian-red': (
+    'badge-surface': $color-indian-red-400,
+    'badge-text': $color-white,
+  ),
+  'sky-magenta': (
+    'badge-surface': $color-sky-magenta-400,
+    'badge-text': $color-white,
+  ),
+  'african-violet': (
+    'badge-surface': $color-african-violet-400,
+    'badge-text': $color-white,
+  ),
+  'silver-lake-blue': (
+    'badge-surface': $color-silver-lake-blue-400,
+    'badge-text': $color-white,
+  ),
+  'air-force-blue': (
+    'badge-surface': $color-air-force-blue-400,
+    'badge-text': $color-white,
+  ),
+);
+
+$dropdown-menu-color-themes: (
+  'cool-gray': (
+    'dropdown-menu-btn-text': $color-cool-gray-400,
+    'dropdown-menu-btn-text-hover': $color-cool-gray-600,
+    'dropdown-menu-btn-surface-hover': $color-cool-gray-300,
+  ),
+  'indian-red': (
+    'dropdown-menu-btn-text': $color-indian-red-400,
+    'dropdown-menu-btn-text-hover': $color-indian-red-600,
+    'dropdown-menu-btn-surface-hover': $color-indian-red-300,
+  ),
+  'sky-magenta': (
+    'dropdown-menu-btn-text': $color-sky-magenta-400,
+    'dropdown-menu-btn-text-hover': $color-sky-magenta-600,
+    'dropdown-menu-btn-surface-hover': $color-sky-magenta-300,
+  ),
+  'african-violet': (
+    'dropdown-menu-btn-text': $color-african-violet-400,
+    'dropdown-menu-btn-text-hover': $color-african-violet-600,
+    'dropdown-menu-btn-surface-hover': $color-african-violet-300,
+  ),
+  'silver-lake-blue': (
+    'dropdown-menu-btn-text': $color-silver-lake-blue-400,
+    'dropdown-menu-btn-text-hover': $color-silver-lake-blue-600,
+    'dropdown-menu-btn-surface-hover': $color-silver-lake-blue-300,
+  ),
+  'air-force-blue': (
+    'dropdown-menu-btn-text': $color-air-force-blue-400,
+    'dropdown-menu-btn-text-hover': $color-air-force-blue-600,
+    'dropdown-menu-btn-surface-hover': $color-air-force-blue-300,
+  ),
+);
+
+$list-color-themes: (
+  'cool-gray': (
+    'list-surface': $color-cool-gray-200,
+    'list-text': $color-cool-gray-700,
+    'list-btn-text': $color-cool-gray-600,
+    'list-btn-text-hover': $color-cool-gray-700,
+    'list-btn-surface-hover': $color-cool-gray-300,
+  ),
+  'indian-red': (
+    'list-surface': $color-indian-red-200,
+    'list-text': $color-indian-red-700,
+    'list-btn-text': $color-indian-red-600,
+    'list-btn-text-hover': $color-indian-red-700,
+    'list-btn-surface-hover': $color-indian-red-300,
+  ),
+  'sky-magenta': (
+    'list-surface': $color-sky-magenta-200,
+    'list-text': $color-sky-magenta-700,
+    'list-btn-text': $color-sky-magenta-600,
+    'list-btn-text-hover': $color-sky-magenta-700,
+    'list-btn-surface-hover': $color-sky-magenta-300,
+  ),
+  'african-violet': (
+    'list-surface': $color-african-violet-200,
+    'list-text': $color-african-violet-700,
+    'list-btn-text': $color-african-violet-600,
+    'list-btn-text-hover': $color-african-violet-700,
+    'list-btn-surface-hover': $color-african-violet-300,
+  ),
+  'silver-lake-blue': (
+    'list-surface': $color-silver-lake-blue-200,
+    'list-text': $color-silver-lake-blue-700,
+    'list-btn-text': $color-silver-lake-blue-600,
+    'list-btn-text-hover': $color-silver-lake-blue-700,
+    'list-btn-surface-hover': $color-silver-lake-blue-300,
+  ),
+  'air-force-blue': (
+    'list-surface': $color-air-force-blue-200,
+    'list-text': $color-air-force-blue-700,
+    'list-btn-text': $color-air-force-blue-600,
+    'list-btn-text-hover': $color-air-force-blue-700,
+    'list-btn-surface-hover': $color-air-force-blue-300,
+  ),
+);

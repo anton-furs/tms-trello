@@ -1,5 +1,7 @@
+import dayjs from 'dayjs';
 import { createList, createCard } from '@components';
 import { cardStore } from '@stores';
+import { formatUser } from '@utils';
 
 export const sync = {
   // Methods to update the list element
@@ -9,26 +11,40 @@ export const sync = {
         const badgeElem = listElem.querySelector('.badge');
         const cardCount = cardStore.getCardsByListId(listElem.dataset.id).length;
         badgeElem.textContent = cardCount.toString();
+        badgeElem.dataset.color = listElem.dataset.color;
       },
     },
-    name: {
-      update: () => {},
+    menu: {
+      update: (listElem) => {
+        const dropdownMenuElem = listElem.querySelector('.dropdown-menu');
+        dropdownMenuElem.dataset.color = listElem.dataset.color;
+      },
     },
-    color: {
-      update: () => {},
+    content: {
+      update: (parentElem, state, listId) => {
+        const listElem = parentElem.querySelector(`[data-id="${listId}"]`);
+        const list = state.find((list) => list.id === listId);
+        const nameElem = listElem.querySelector('.list__name');
+        nameElem.textContent = list.name;
+        listElem.dataset.color = list.color;
+
+        // Update badge and menu
+        sync.list.badge.update(listElem);
+        sync.list.menu.update(listElem);
+      },
     },
   },
 
   // Methods to update the lists
   lists: {
-    update: (element, state) => {
-      const currentLists = Array.from(element.querySelectorAll('.list'));
+    update: (parentElem, state) => {
+      const currentLists = Array.from(parentElem.querySelectorAll('.list'));
 
       // Add list
       state.forEach((list) => {
         if (!currentLists.some((listElem) => listElem.dataset.id === list.id)) {
           const listElem = createList({ ...list });
-          element.appendChild(listElem);
+          parentElem.appendChild(listElem);
         }
       });
 
@@ -44,7 +60,16 @@ export const sync = {
   // Methods to update the card element
   card: {
     content: {
-      update: () => {},
+      update: (parentElem, state, cardId) => {
+        const cardElem = parentElem.querySelector(`[data-id="${cardId}"]`);
+        const card = state.find((card) => card.id === cardId);
+
+        if (cardElem) {
+          cardElem.querySelector('.card-content__body-block__title').textContent = card.title;
+          cardElem.querySelector('.card-content__body-text').textContent = card.description;
+          cardElem.querySelector('.card-content__body-info__user').textContent = formatUser(card.assignee);
+        }
+      },
     },
     move: {
       right: () => {},
@@ -54,26 +79,35 @@ export const sync = {
 
   // Methods to update the cards
   cards: {
-    update: (element, state) => {
-      const listElem = element.closest('.list');
-      const currentCards = Array.from(element.querySelectorAll('.card'));
+    update: (parentElem, state) => {
+      const listElem = parentElem.closest('.list');
+      const currentCards = Array.from(parentElem.querySelectorAll('.card'));
 
       // Add cards
       state.forEach((card) => {
         if (!currentCards.some((c) => c.dataset.id === card.id)) {
           const cardElem = createCard({ ...card });
-          element.appendChild(cardElem);
-          sync.list.badge.update(listElem);
+          parentElem.appendChild(cardElem);
         }
       });
 
       // Remove card
       currentCards.forEach((cardElem) => {
         if (!state.some((card) => card.id === cardElem.dataset.id)) {
-          sync.list.badge.update(listElem);
           cardElem.remove();
         }
       });
+
+      // Sort cards by createdAt
+      // const sortedCards = state.sort((a, b) => dayjs(a.createdAt).diff(dayjs(b.createdAt)));
+      // console.log(sortedCards);
+      // sortedCards.forEach((card) => {
+      //   const cardElem = parentElem.querySelector(`[data-id="${card.id}"]`);
+      //   parentElem.appendChild(cardElem);
+      // });
+
+      // Update badge
+      sync.list.badge.update(listElem);
     },
   },
 };

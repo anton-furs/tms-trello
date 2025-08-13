@@ -85,9 +85,30 @@
  * @include line-clamp();
  */
 
-@mixin line-clamp($lines: 0){
+@mixin line-clamp($lines: 0) {
   display: -webkit-box;
   -webkit-line-clamp: $lines;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/**
+ * Generate CSS variables from a map
+ * 
+ * @param {map} $theme-map - Map of color themes
+ * 
+ * Usage examples:
+ * @include generate-css-vars($badge-color-themes);
+ * @include generate-css-vars($dropdown-menu-color-themes);
+ * @include generate-css-vars($list-color-themes);
+ */
+@mixin generate-css-vars($theme-map) {
+  @each $color-name, $styles in $theme-map {
+    &[data-color='#{$color-name}'] {
+      @each $prop, $value in $styles {
+        $css-var-name: '--' + $prop;
+        #{$css-var-name}: #{$value};
+      }
+    }
+  }
 }
