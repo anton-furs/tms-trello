@@ -2,7 +2,7 @@ import { dom } from '@utils/dom';
 import { createIcon } from '@components';
 
 export const createSelect = ({ value, options }) => {
-  const rootElem = dom.create({ tag: 'div', className: 'select', dataset: { value: value } });
+  const rootElem = dom.create({ tag: 'div', className: 'select', dataset: { value: value ? value : options[0] } });
 
   let isOpen = false;
 

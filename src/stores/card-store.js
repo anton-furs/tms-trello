@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { generateUniqueId } from '@utils/nanoid';
 import { appStore } from '@stores/app-store';
 
-const LIST_LIMITS = { 'In Progress': 5 };
+const LIST_LIMITS = { 'In Progress': 10 };
 
 export const cardStore = {
   subscribers: new Set(),
@@ -52,22 +52,15 @@ export const cardStore = {
       assignee,
       createdAt: dayjs().toISOString(),
     };
-    // Add check if list "In Progress" has 3 cards
-    const list = appStore.getState().lists.find((list) => list.id === listId);
-    if (list.name === 'In Progress') {
-      const cards = cardStore.getCardsByListId(listId);
-      if (cards.length >= 3) return;
-    } else {
-      appStore.setState({ cards: [...appStore.getState().cards, card] });
+    appStore.setState({ cards: [...appStore.getState().cards, card] });
 
-      // Notify only the specific list
-      cardStore.notify(
-        listId,
-        appStore.getState().cards.filter((card) => card.listId === listId),
-        'add'
-      );
-      return card;
-    }
+    // Notify only the specific list
+    cardStore.notify(
+      listId,
+      appStore.getState().cards.filter((card) => card.listId === listId),
+      'add'
+    );
+    return card;
   },
 
   // Update card { title, description, assignee }

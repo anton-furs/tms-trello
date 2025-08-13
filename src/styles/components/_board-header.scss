@@ -47,7 +47,7 @@
       background-color: $color-white;
       border-radius: 8px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-      padding: 4px;
+      padding: 8px;
       z-index: 1010;
     }
 
@@ -66,9 +66,11 @@
       cursor: pointer;
       @include text('sm', 'medium');
       border-radius: 6px;
+      color: $color-cool-gray-500;
 
       &:hover {
         background-color: $color-cool-gray-100;
+        color: $color-cool-gray-900;
       }
     }
   }
