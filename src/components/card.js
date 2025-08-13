@@ -5,7 +5,7 @@ import { cardStore } from '@stores';
 
 export const createCard = ({ id, title, description, assignee, createdAt }) => {
   const rootElem = dom.create({ tag: 'div', className: 'card', dataset: { id } });
-  const createdAtFormated = dayjs(createdAt).format('MMMM D, YYYY');
+  const createdAtFormated = dayjs(createdAt).format('MMMM D, YYYY [at] HH:mm');
   const moveLeftButtonElem = dom.create({
     tag: 'div',
     className: 'card-content__move-button',

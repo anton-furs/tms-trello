@@ -29,6 +29,7 @@ export const createBoard = ({ name }) => {
         showAddEditCard(modalAddCard);
         modalAddCard.addEventListener('modal:confirm', (elem) => {
           const data = elem.detail;
+          console.log(data);
           cardStore.addCard({ listId: e.detail.listId, ...data });
         });
       }
