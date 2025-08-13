@@ -21,7 +21,7 @@ export const createBoard = ({ name }) => {
       showAddEditCard(modalAddCard);
       modalAddCard.addEventListener('modal:confirm', (elem) => {
         const data = elem.detail;
-        cardStore.addCard({listId: e.detail.listId,  ...data });
+        cardStore.addCard({ listId: e.detail.listId, ...data });
       });
     }
     if (e.type === 'list:edit') {
@@ -62,11 +62,7 @@ export const createBoard = ({ name }) => {
     }
     if (e.type === 'card:edit') {
       const card = cardStore.getCardById(e.detail.cardId);
-      const modalAddCard = createAddEditModal(
-        'Edit card', 
-        card.title,
-        card.description,
-        card.assignee);
+      const modalAddCard = createAddEditModal('Edit card', card.title, card.description, card.assignee);
       document.body.appendChild(modalAddCard);
       showAddEditCard(modalAddCard);
       modalAddCard.addEventListener('modal:confirm', (elem) => {
@@ -75,12 +71,12 @@ export const createBoard = ({ name }) => {
       });
     }
     if (e.type === 'card:move-left') {
-      // TODO: move card to the left
-      console.log('card:move-left');
+      cardStore.moveCardLeft(e.detail.cardId);
+      //console.log('card:move-left');
     }
     if (e.type === 'card:move-right') {
-      // TODO: move card to the right
-      console.log('card:move-right');
+      cardStore.moveCardRight(e.detail.cardId);
+      //console.log('card:move-right');
     }
   };
 

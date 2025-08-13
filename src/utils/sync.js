@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { createList, createCard } from '@components';
 import { cardStore } from '@stores';
 import { formatUser } from '@utils';
@@ -96,6 +97,14 @@ export const sync = {
           cardElem.remove();
         }
       });
+
+      // Sort cards by createdAt
+      // const sortedCards = state.sort((a, b) => dayjs(a.createdAt).diff(dayjs(b.createdAt)));
+      // console.log(sortedCards);
+      // sortedCards.forEach((card) => {
+      //   const cardElem = parentElem.querySelector(`[data-id="${card.id}"]`);
+      //   parentElem.appendChild(cardElem);
+      // });
 
       // Update badge
       sync.list.badge.update(listElem);
