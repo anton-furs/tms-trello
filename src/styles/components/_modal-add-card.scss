@@ -1,7 +1,6 @@
 @use '../abstracts' as *;
 
 .modal-add-card {
-  // Modal add card component styles
   position: fixed;
 
   &__overlay {
@@ -12,62 +11,5 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000;
-  }
-
-  &__select {
-    position: relative;
-    border: none;
-    border-radius: 8px;
-    width: 240px;
-    height: 40px;
-    background-color: $color-cool-gray-100;
-    color: $color-air-force-blue-900;
-    @include text('sm', 'medium');
-    @include flex($justify: space-between, $align: center);
-    padding: 12px;
-    text-align: center;
-    cursor: pointer;
-
-    &:active {
-      background-color: $color-cool-gray-200;
-    }
-
-    &-title {
-      @include line-clamp(1);
-    }
-
-    &-option {
-      display: none;
-      text-align: start;
-      padding: 8px;
-      border-radius: 8px;
-      box-shadow: 0 2px 40px 0;
-      background-color: $color-white;
-      width: 240px;
-      max-height: 200px;
-      position: absolute;
-      top: 50px;
-      left: 0px;
-      overflow: auto;
-      box-shadow: 0 2px 40px 0 oklch(0 0 0 / 0.15);
-
-      &::-webkit-scrollbar {
-        width: 0;
-      }
-
-      &__name {
-        color: $color-cool-gray-500;
-        @include text('sm', 'medium');
-        width: 100%;
-        border-radius: 6px;
-        padding: 10px;
-
-        &:hover {
-          background-color: $color-cool-gray-100;
-          color: $color-cool-gray-900;
-          cursor: pointer;
-        }
-      }
-    }
   }
 }
