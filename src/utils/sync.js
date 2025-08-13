@@ -65,9 +65,9 @@ export const sync = {
         const card = state.find((card) => card.id === cardId);
 
         if (cardElem) {
-          cardElem.querySelector('.card-content__body-block__title').textContent = card.title;
-          cardElem.querySelector('.card-content__body-text').textContent = card.description;
-          cardElem.querySelector('.card-content__body-info__user').textContent = formatUser(card.assignee);
+          cardElem.querySelector('.card-content__title').textContent = card.title;
+          cardElem.querySelector('.card-content__description').textContent = card.description;
+          cardElem.querySelector('.card-content__assignee').textContent = formatUser(card.assignee);
         }
       },
     },
@@ -99,8 +99,8 @@ export const sync = {
       });
 
       // Sort cards by createdAt
-      // const sortedCards = state.sort((a, b) => dayjs(a.createdAt).diff(dayjs(b.createdAt)));
-      // console.log(sortedCards);
+      const sortedCards = state.sort((a, b) => dayjs(a.createdAt).diff(dayjs(b.createdAt)));
+      console.log(sortedCards);
       // sortedCards.forEach((card) => {
       //   const cardElem = parentElem.querySelector(`[data-id="${card.id}"]`);
       //   parentElem.appendChild(cardElem);
