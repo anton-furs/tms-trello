@@ -8,13 +8,11 @@
   background-color: $color-white;
 
   &-content {
-    @include flex(row, $justify: center);
-    height: 172px;
-    padding: 4px;
+    @include flex(row, $justify: center, $align: stretch);
+    padding: 3px;
 
     &__arrow {
       width: 18px;
-      height: 100%;
       background-color: $color-cool-gray-100;
       border-radius: 4px;
       display: none;
@@ -22,6 +20,14 @@
 
       &-icon {
         color: $color-cool-gray-400;
+      }
+
+      &-hover{
+        @include flex($align: center);
+
+        &:active{
+          background-color: $color-cool-gray-200;
+        }
       }
     }
 
@@ -93,10 +99,6 @@
     box-shadow:
       0 2px 0 0 color-mix(in oklch, $color-cool-gray-900 12%, transparent),
       inset 0 0 0 2px $color-cool-gray-900;
-
-    .card-content__arrow {
-      @include flex($align: center);
-    }
 
     .card-content__body {
       cursor: pointer;
