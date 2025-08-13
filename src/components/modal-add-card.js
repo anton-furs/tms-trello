@@ -92,5 +92,7 @@ export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText
 };
 
 export const showAddEditCard = (element) => {
+  const inputElem = element.querySelector('input');
   element.style.display = 'block';
+  inputElem.focus();
 };

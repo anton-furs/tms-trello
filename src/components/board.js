@@ -29,8 +29,9 @@ export const createBoard = ({ name }) => {
         showAddEditCard(modalAddCard);
         modalAddCard.addEventListener('modal:confirm', (elem) => {
           const data = elem.detail;
-          console.log(data);
-          cardStore.addCard({ listId: e.detail.listId, ...data });
+          if (data.title.trim(' ') && data.description.trim(' ')) {
+            cardStore.addCard({ listId: e.detail.listId, ...data });
+          }
         });
       }
     }
@@ -77,7 +78,9 @@ export const createBoard = ({ name }) => {
       showAddEditCard(modalAddCard);
       modalAddCard.addEventListener('modal:confirm', (elem) => {
         const data = elem.detail;
-        cardStore.updateCard(card.id, data);
+        if (data.title.trim(' ') && data.description.trim(' ')) {
+          cardStore.updateCard(card.id, data);
+        }
       });
     }
     if (e.type === 'card:move') {
