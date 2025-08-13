@@ -7,7 +7,7 @@ import {
   createConfirmModal,
   createBoardHeader,
   createAddEditModal,
-  showAddEditCard
+  showAddEditCard,
 } from '@components';
 import { boardStore, listStore, cardStore } from '@stores';
 
@@ -16,13 +16,25 @@ export const createBoard = ({ name }) => {
 
   const handleListEvents = (e) => {
     if (e.type === 'list:add-card') {
-      const modalAddCard = createAddEditModal();
-      document.body.appendChild(modalAddCard);
-      showAddEditCard(modalAddCard);
-      modalAddCard.addEventListener('modal:confirm', (elem) => {
-        const data = elem.detail;
-        cardStore.addCard({ listId: e.detail.listId, ...data });
-      });
+      // Add check if list "In progress" has 3 cards
+      const list = listStore.getListById(e.detail.listId);
+      const cards = cardStore.getCardsByListId(list.id);
+      if (list.name === 'In Progress' && cards.length >= 3) {
+        const modal = createConfirmModal({
+          title: 'Too many tasks in progress',
+          message: `You can't add more than 10 tasks to the "In Progress" column. Please complete current tasks before starting new ones.`,
+        });
+        document.body.appendChild(modal);
+        modal.showModal();
+      } else {
+        const modalAddCard = createAddEditModal();
+        document.body.appendChild(modalAddCard);
+        showAddEditCard(modalAddCard);
+        modalAddCard.addEventListener('modal:confirm', (elem) => {
+          const data = elem.detail;
+          cardStore.addCard({ listId: e.detail.listId, ...data });
+        });
+      }
     }
     if (e.type === 'list:edit') {
       const list = listStore.getListById(e.detail.listId);
