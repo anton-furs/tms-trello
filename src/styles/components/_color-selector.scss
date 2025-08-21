@@ -1,0 +1,57 @@
+@use '../abstracts' as *;
+
+.color-selector {
+  width: fit-content;
+  @include flex(row, $gap: 8px);
+
+  &__label {
+    width: 32px;
+    height: 32px;
+    @include flex(row, center, center);
+    border-radius: 50%;
+    background-color: $color-cool-gray-200;
+    cursor: pointer;
+  }
+
+  &__icon {
+    color: transparent;
+  }
+
+  &__label:has(.color-selector__input:checked) {
+    .color-selector__icon {
+      color: $color-cool-gray-900;
+    }
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &--cool-gray {
+    background-color: $color-cool-gray-200;
+  }
+
+  &--indian-red {
+    background-color: $color-indian-red-200;
+  }
+
+  &--sky-magenta {
+    background-color: $color-sky-magenta-200;
+  }
+
+  &--african-violet {
+    background-color: $color-african-violet-200;
+  }
+
+  &--silver-lake-blue {
+    background-color: $color-silver-lake-blue-200;
+  }
+
+  &--air-force-blue {
+    background-color: $color-air-force-blue-200;
+  }
+
+  // &__label:has(.color-selector__input:checked) {
+  //   border: 2px solid $color-cool-gray-900;
+  // }
+}

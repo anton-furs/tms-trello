@@ -1,0 +1,75 @@
+@use '../abstracts' as *;
+
+.dropdown-menu {
+  @include generate-css-vars($dropdown-menu-color-themes);
+
+  position: relative;
+  @include flex(column, $gap: 4px);
+
+  &__trigger {
+    width: 32px;
+    height: 32px;
+    @include flex(row, center, center);
+    border-radius: 8px;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--dropdown-menu-btn-surface-hover);
+
+      .dropdown-menu__dots-icon {
+        color: var(--dropdown-menu-btn-text-hover);
+      }
+    }
+  }
+
+  &__dots-icon {
+    color: var(--dropdown-menu-btn-text);
+  }
+
+  &__content {
+    position: absolute;
+    z-index: 100;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 128px;
+    height: fit-content;
+    border-radius: 8px;
+    padding: 8px;
+    @include flex(column);
+    background-color: $color-white;
+    box-shadow: 0 2px 40px 0 oklch(0 0 0 / 0.15);
+    display: none;
+
+    &[data-open='true'] {
+      display: block;
+    }
+
+    &-title {
+      width: 100%;
+      height: 32px;
+      padding: 0 12px;
+      @include flex(row, $align: center);
+      @include text('sm', 'medium');
+      color: $color-cool-gray-300;
+    }
+
+    &-item {
+      width: 100%;
+      height: 32px;
+      padding: 0 12px;
+      @include flex(row, $align: center);
+      @include text('sm', 'medium');
+      letter-spacing: -0.01em;
+      border-radius: 6px;
+      background-color: transparent;
+      color: $color-cool-gray-500;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-cool-gray-100;
+        color: $color-cool-gray-900;
+      }
+    }
+  }
+}

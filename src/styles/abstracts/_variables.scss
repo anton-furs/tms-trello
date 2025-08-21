@@ -1,0 +1,196 @@
+$list-width: 342px;
+
+$font-inter: 'Inter', sans-serif;
+
+$color-white: oklch(100% 0 0);
+$color-black: oklch(0% 0 0);
+
+$color-cool-gray-50: oklch(98% 0.001869 274);
+$color-cool-gray-100: oklch(96% 0.003773 274);
+$color-cool-gray-200: oklch(92% 0.007673 274);
+$color-cool-gray-300: oklch(87% 0.012731 274);
+$color-cool-gray-400: oklch(76% 0.022083 273.3);
+$color-cool-gray-500: oklch(64% 0.030921 274);
+$color-cool-gray-600: oklch(54% 0.035917 274);
+$color-cool-gray-700: oklch(42% 0.037131 274.4);
+$color-cool-gray-800: oklch(30.7% 0.02917 274);
+$color-cool-gray-900: oklch(19.2% 0.032833 274);
+
+$color-indian-red-50: oklch(98% 0.005988 25.6);
+$color-indian-red-100: oklch(96% 0.012227 25.6);
+$color-indian-red-200: oklch(92% 0.025289 25.6);
+$color-indian-red-300: oklch(87% 0.043031 25.6);
+$color-indian-red-400: oklch(76% 0.082932 25.6);
+$color-indian-red-500: oklch(64% 0.122727 25.6);
+$color-indian-red-600: oklch(54% 0.109609 25.6);
+$color-indian-red-700: oklch(42% 0.085239 25.6);
+$color-indian-red-800: oklch(30% 0.060892 25.6);
+$color-indian-red-900: oklch(20% 0.040587 25.6);
+
+$color-sky-magenta-50: oklch(98% 0.004726 347.2);
+$color-sky-magenta-100: oklch(96% 0.009613 347.2);
+$color-sky-magenta-200: oklch(92% 0.019963 347.2);
+$color-sky-magenta-300: oklch(87% 0.034069 347.2);
+$color-sky-magenta-400: oklch(76% 0.070833 347.2);
+$color-sky-magenta-500: oklch(64% 0.097112 347.2);
+$color-sky-magenta-600: oklch(54% 0.091048 347.2);
+$color-sky-magenta-700: oklch(42% 0.070815 347.2);
+$color-sky-magenta-800: oklch(30% 0.050582 347.2);
+$color-sky-magenta-900: oklch(20% 0.033709 347.2);
+
+$color-african-violet-50: oklch(98% 0.00391 304);
+$color-african-violet-100: oklch(96% 0.007912 304);
+$color-african-violet-200: oklch(92% 0.016098 304);
+$color-african-violet-300: oklch(87% 0.026729 304);
+$color-african-violet-400: oklch(76% 0.051731 304);
+$color-african-violet-500: oklch(64% 0.072059 304);
+$color-african-violet-600: oklch(54% 0.084592 304);
+$color-african-violet-700: oklch(42% 0.065793 304);
+$color-african-violet-800: oklch(30% 0.053258 304);
+$color-african-violet-900: oklch(20% 0.035511 304);
+
+$color-silver-lake-blue-50: oklch(98% 0.004413 260.3);
+$color-silver-lake-blue-100: oklch(96% 0.008889 260.3);
+$color-silver-lake-blue-200: oklch(92% 0.018073 260.3);
+$color-silver-lake-blue-300: oklch(87% 0.02996 260.3);
+$color-silver-lake-blue-400: oklch(76% 0.057766 260.3);
+$color-silver-lake-blue-500: oklch(64% 0.081129 260.3);
+$color-silver-lake-blue-600: oklch(54% 0.094034 260.3);
+$color-silver-lake-blue-700: oklch(42% 0.073148 260.3);
+$color-silver-lake-blue-800: oklch(30% 0.058463 260.3);
+$color-silver-lake-blue-900: oklch(20% 0.038975 260.3);
+
+$color-air-force-blue-50: oklch(98% 0.006295 224.3);
+$color-air-force-blue-100: oklch(96% 0.012679 224.3);
+$color-air-force-blue-200: oklch(92% 0.025732 224.3);
+$color-air-force-blue-300: oklch(87% 0.039964 224.3);
+$color-air-force-blue-400: oklch(76% 0.05723 224.3);
+$color-air-force-blue-500: oklch(64% 0.059035 224.3);
+$color-air-force-blue-600: oklch(54% 0.060995 224.3);
+$color-air-force-blue-700: oklch(42% 0.0506 224.3);
+$color-air-force-blue-800: oklch(30% 0.036139 224.3);
+$color-air-force-blue-900: oklch(20% 0.022587 224.3);
+
+// prettier-ignore
+$text-styles: (
+  '2xs': (10px, 14px),
+  'xs': (12px, 16px),
+  'sm': (14px, 18px),
+  'base': (16px, 20px),
+  'lg': (18px, 22px),
+  'xl': (20px, 24px),
+  '2xl': (24px, 28px)
+);
+
+$text-weights: (
+  'light': 300,
+  'normal': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700,
+);
+
+$badge-color-themes: (
+  'cool-gray': (
+    'badge-surface': $color-cool-gray-400,
+    'badge-text': $color-white,
+  ),
+  'indian-red': (
+    'badge-surface': $color-indian-red-400,
+    'badge-text': $color-white,
+  ),
+  'sky-magenta': (
+    'badge-surface': $color-sky-magenta-400,
+    'badge-text': $color-white,
+  ),
+  'african-violet': (
+    'badge-surface': $color-african-violet-400,
+    'badge-text': $color-white,
+  ),
+  'silver-lake-blue': (
+    'badge-surface': $color-silver-lake-blue-400,
+    'badge-text': $color-white,
+  ),
+  'air-force-blue': (
+    'badge-surface': $color-air-force-blue-400,
+    'badge-text': $color-white,
+  ),
+);
+
+$dropdown-menu-color-themes: (
+  'cool-gray': (
+    'dropdown-menu-btn-text': $color-cool-gray-400,
+    'dropdown-menu-btn-text-hover': $color-cool-gray-600,
+    'dropdown-menu-btn-surface-hover': $color-cool-gray-300,
+  ),
+  'indian-red': (
+    'dropdown-menu-btn-text': $color-indian-red-400,
+    'dropdown-menu-btn-text-hover': $color-indian-red-600,
+    'dropdown-menu-btn-surface-hover': $color-indian-red-300,
+  ),
+  'sky-magenta': (
+    'dropdown-menu-btn-text': $color-sky-magenta-400,
+    'dropdown-menu-btn-text-hover': $color-sky-magenta-600,
+    'dropdown-menu-btn-surface-hover': $color-sky-magenta-300,
+  ),
+  'african-violet': (
+    'dropdown-menu-btn-text': $color-african-violet-400,
+    'dropdown-menu-btn-text-hover': $color-african-violet-600,
+    'dropdown-menu-btn-surface-hover': $color-african-violet-300,
+  ),
+  'silver-lake-blue': (
+    'dropdown-menu-btn-text': $color-silver-lake-blue-400,
+    'dropdown-menu-btn-text-hover': $color-silver-lake-blue-600,
+    'dropdown-menu-btn-surface-hover': $color-silver-lake-blue-300,
+  ),
+  'air-force-blue': (
+    'dropdown-menu-btn-text': $color-air-force-blue-400,
+    'dropdown-menu-btn-text-hover': $color-air-force-blue-600,
+    'dropdown-menu-btn-surface-hover': $color-air-force-blue-300,
+  ),
+);
+
+$list-color-themes: (
+  'cool-gray': (
+    'list-surface': $color-cool-gray-200,
+    'list-text': $color-cool-gray-700,
+    'list-btn-text': $color-cool-gray-600,
+    'list-btn-text-hover': $color-cool-gray-700,
+    'list-btn-surface-hover': $color-cool-gray-300,
+  ),
+  'indian-red': (
+    'list-surface': $color-indian-red-200,
+    'list-text': $color-indian-red-700,
+    'list-btn-text': $color-indian-red-600,
+    'list-btn-text-hover': $color-indian-red-700,
+    'list-btn-surface-hover': $color-indian-red-300,
+  ),
+  'sky-magenta': (
+    'list-surface': $color-sky-magenta-200,
+    'list-text': $color-sky-magenta-700,
+    'list-btn-text': $color-sky-magenta-600,
+    'list-btn-text-hover': $color-sky-magenta-700,
+    'list-btn-surface-hover': $color-sky-magenta-300,
+  ),
+  'african-violet': (
+    'list-surface': $color-african-violet-200,
+    'list-text': $color-african-violet-700,
+    'list-btn-text': $color-african-violet-600,
+    'list-btn-text-hover': $color-african-violet-700,
+    'list-btn-surface-hover': $color-african-violet-300,
+  ),
+  'silver-lake-blue': (
+    'list-surface': $color-silver-lake-blue-200,
+    'list-text': $color-silver-lake-blue-700,
+    'list-btn-text': $color-silver-lake-blue-600,
+    'list-btn-text-hover': $color-silver-lake-blue-700,
+    'list-btn-surface-hover': $color-silver-lake-blue-300,
+  ),
+  'air-force-blue': (
+    'list-surface': $color-air-force-blue-200,
+    'list-text': $color-air-force-blue-700,
+    'list-btn-text': $color-air-force-blue-600,
+    'list-btn-text-hover': $color-air-force-blue-700,
+    'list-btn-surface-hover': $color-air-force-blue-300,
+  ),
+);

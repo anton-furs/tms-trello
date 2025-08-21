@@ -1,0 +1,9 @@
+@use '../abstracts' as *;
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  @include flex(column, $align: center);
+  @include text('sm', 'medium');
+  color: $color-cool-gray-900;
+}

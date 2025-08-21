@@ -1,0 +1,114 @@
+@use './variables' as *;
+@use 'sass:map';
+@use 'sass:list';
+
+/**
+ * Flexbox layout mixin for quick and consistent flex container styling
+ * 
+ * @param {string} $direction - flex-direction property (row, column, row-reverse, column-reverse)
+ * @param {string} $justify - justify-content property (flex-start, flex-end, center, space-between, space-around, space-evenly)
+ * @param {string} $align - align-items property (flex-start, flex-end, center, baseline, stretch)
+ * @param {number} $gap - gap between flex items (in px, rem, em, etc.)
+ * 
+ * Usage examples:
+ * 
+ * Basic row layout:
+ * @include flex();
+ * 
+ * Column layout with centered items:
+ * @include flex(column, center, center);
+ * 
+ * Space-between layout with 16px gap:
+ * @include flex(row, space-between, center, 16px);
+ * 
+ * Vertical stack with items stretched to fill width:
+ * @include flex(column, flex-start, stretch, 8px);
+ * 
+ * This bypasses $justify and $align but sets $direction and $gap
+ * @include flex(column, $gap: 16px);
+ * 
+ * This bypasses only $justify
+ * @include flex(row, $align: center, $gap: 8px);
+ */
+@mixin flex($direction: row, $justify: flex-start, $align: flex-start, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+/**
+ * Text mixin for better typography styling
+ * 
+ * @param {string} $size - Size key from $text-styles map (e.g., 'xs', 'sm', 'base', 'lg', 'xl')
+ * @param {string} $weight - Weight key from $text-weights map (e.g., 'regular', 'medium', 'bold')
+ * @param {string|number} $line-height - Optional custom line height (overrides default from $text-styles)
+ * 
+ * Usage examples:
+ * 
+ * Basic usage with size only:
+ * @include text('base');
+ * 
+ * Size and weight:
+ * @include text('lg', 'bold');
+ * 
+ * Size, weight and custom line height:
+ * @include text('sm', 'medium', 1.5);
+ * 
+ * Size and custom line height (skipping weight):
+ * @include text('xl', $line-height: 1.2);
+ */
+@mixin text($size, $weight: null, $line-height: null) {
+  $text-style: map.get($text-styles, $size);
+  font-size: list.nth($text-style, 1);
+  @if $line-height {
+    line-height: $line-height;
+  } @else {
+    line-height: list.nth($text-style, 2);
+  }
+  @if $weight {
+    font-weight: map.get($text-weights, $weight);
+  }
+}
+
+/**
+ * Line-clamp for sass compatibility
+ * 
+ * @param {number} $lines - limits the text lines
+ * 
+ * Usage examples:
+ * 
+ * Basic row layout:
+ * @include line-clamp();
+ */
+
+@mixin line-clamp($lines: 0) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/**
+ * Generate CSS variables from a map
+ * 
+ * @param {map} $theme-map - Map of color themes
+ * 
+ * Usage examples:
+ * @include generate-css-vars($badge-color-themes);
+ * @include generate-css-vars($dropdown-menu-color-themes);
+ * @include generate-css-vars($list-color-themes);
+ */
+@mixin generate-css-vars($theme-map) {
+  @each $color-name, $styles in $theme-map {
+    &[data-color='#{$color-name}'] {
+      @each $prop, $value in $styles {
+        $css-var-name: '--' + $prop;
+        #{$css-var-name}: #{$value};
+      }
+    }
+  }
+}

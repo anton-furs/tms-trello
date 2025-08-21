@@ -1,0 +1,14 @@
+@use '../abstracts' as *;
+
+.input {
+  // Input component styles
+  border-radius: 8px;
+  border: 1px solid $color-cool-gray-200;
+  padding: 12px 14px;
+  width: 100%;
+  @include text('sm', 'normal', 16px);
+  
+  &::placeholder {
+    color: $color-cool-gray-300;
+  }
+}

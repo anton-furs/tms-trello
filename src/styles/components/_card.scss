@@ -1,0 +1,111 @@
+@use '../abstracts' as *;
+
+.card {
+  // Card component styles
+  width: 325px;
+  box-shadow: 0 2px 0 0 color-mix(in oklch, $color-cool-gray-900 12%, transparent);
+  border-radius: 8px;
+  background-color: $color-white;
+
+  &-content {
+    @include flex(row, $justify: center, $align: stretch);
+    padding: 4px;
+
+    &__move-button {
+      width: 18px;
+      background-color: $color-cool-gray-100;
+      border-radius: 4px;
+      display: none;
+      cursor: pointer;
+
+      &-icon {
+        color: $color-cool-gray-400;
+      }
+
+      &-hover {
+        @include flex($align: center);
+
+        &:active {
+          background-color: $color-cool-gray-200;
+        }
+      }
+    }
+
+    &__body {
+      @include flex(column, $justify: space-between, $gap: 16px);
+      padding: 12px;
+      height: 100%;
+      width: 100%;
+    }
+
+    &__title-container {
+      @include flex(row, $justify: space-between, $align: flex-start);
+      width: 100%;
+    }
+
+    &__title {
+      width: 100%;
+      @include text('sm', 'medium');
+      @include line-clamp(2);
+      letter-spacing: -0.01em;
+    }
+
+    &__delete-button {
+      display: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: $color-cool-gray-100;
+      }
+
+      &-icon {
+        &:active {
+          color: $color-cool-gray-900;
+        }
+      }
+    }
+
+    &__description {
+      width: 100%;
+      @include text('xs', 'medium');
+      @include line-clamp(3);
+      letter-spacing: -0.01em;
+    }
+
+    &__info {
+      @include flex(row, $justify: space-between, $align: flex-end);
+      width: 100%;
+    }
+
+    &__assignee {
+      @include flex($justify: center, $align: center);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      color: $color-cool-gray-50;
+      background-color: $color-cool-gray-900;
+      @include text('2xs', 'medium');
+    }
+
+    &__date {
+      @include text('xs', 'medium', 16px);
+      color: $color-cool-gray-400;
+    }
+  }
+
+  &:hover {
+    box-shadow:
+      0 2px 0 0 color-mix(in oklch, $color-cool-gray-900 12%, transparent),
+      inset 0 0 0 2px $color-cool-gray-900;
+
+    .card-content__body {
+      cursor: pointer;
+    }
+
+    .card-content__delete-button {
+      @include flex(row, $justify: center, $align: center);
+    }
+  }
+}

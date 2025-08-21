@@ -1,0 +1,10 @@
+@use '../abstracts' as *;
+
+.modal-limit-warn {
+  max-width: 360px;
+
+  &__text {
+    @include text('sm', 'normal');
+    color: $color-cool-gray-500;
+  }
+}

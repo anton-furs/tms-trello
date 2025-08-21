@@ -1,0 +1,15 @@
+@use '../abstracts' as *;
+
+.badge {
+  @include generate-css-vars($badge-color-themes);
+
+  width: fit-content;
+  min-height: 24px;
+  @include flex(row, center, center);
+  padding: 0 12px;
+  border-radius: 12px;
+  color: $color-white;
+  @include text('sm', 'medium');
+  background-color: var(--badge-surface);
+  color: var(--badge-text);
+}
