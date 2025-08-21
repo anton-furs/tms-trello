@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { generateUniqueId } from '@utils/nanoid';
 import { appStore } from '@stores/app-store';
 
-const LIST_LIMITS = { 'In Progress': 10 };
+const LIST_LIMITS = { 'In Progress': 5 };
 
 export const cardStore = {
   subscribers: new Set(),

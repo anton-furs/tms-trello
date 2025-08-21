@@ -3,6 +3,8 @@ import { dom } from '@utils/dom';
 export const createModalBase = ({ title, body = [], footer = [], variant = 'entry' }) => {
   const rootElem = dom.create({ tag: 'dialog', className: `modal modal--${variant}` });
 
+  let clickStartedInside = false;
+
   // Create content container
   const contentElem = dom.create({ tag: 'div', className: 'modal__content' });
 
@@ -21,11 +23,31 @@ export const createModalBase = ({ title, body = [], footer = [], variant = 'entr
 
   contentElem.append(headerElem, bodyElem, footerElem);
 
+  rootElem.addEventListener('mousedown', (e) => {
+    clickStartedInside = e.target !== rootElem;
+  });
+
   rootElem.addEventListener('click', (e) => {
-    if (e.target === rootElem) {
+    if (e.target === rootElem && !clickStartedInside) {
       rootElem.close();
     }
   });
+
+  rootElem.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+
+      const confirmButton = rootElem.querySelector('[data-action="confirm"]');
+      if (confirmButton) {
+        confirmButton.click();
+      }
+    }
+
+    if (e.key === 'Escape') {
+      rootElem.close();
+    }
+  });
+
   rootElem.addEventListener('close', () => {
     rootElem.remove();
   });

@@ -1,21 +1,19 @@
-// Get users data
-export let users = [];
+import { userStore } from '@stores/user-store';
+
 const URL_FOR_GET_USERS = 'https://jsonplaceholder.typicode.com/users';
 
-fetch(URL_FOR_GET_USERS)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Ошибка сети');
+// Get users data
+export const fetchUsers = async () => {
+  try {
+    const res = await fetch(URL_FOR_GET_USERS);
+    if (!res.ok) {
+      throw new Error('Failed fetch users');
     }
-    return response.json();
-  })
-  .then(data => {
-    data.forEach(elem => users.push(elem.name));
-  })
-  .catch(error => {
-    console.error('Ошибка:', error);
-  });
-
-  
-
-
+    const data = await res.json();
+    const userNames = data.map((user) => user.name);
+    userStore.setUsers(userNames);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('Error:', err);
+  }
+};

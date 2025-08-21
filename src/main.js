@@ -2,6 +2,7 @@ import '@styles/main.scss';
 import { dom } from '@utils/dom';
 import { boardStore } from '@stores';
 import { createHeader, createBoard } from '@components';
+import { fetchUsers } from '@api';
 
 const App = () => {
   const container = dom.create({ tag: 'div', className: 'container' });
@@ -15,3 +16,7 @@ const App = () => {
 
 const root = document.querySelector('#root');
 root.append(App());
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchUsers();
+});

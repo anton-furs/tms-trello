@@ -12,6 +12,7 @@ export default defineConfig(() => {
         '@styles': resolve(__dirname, 'src/styles'),
         '@utils': resolve(__dirname, 'src/utils'),
         '@assets': resolve(__dirname, 'src/assets'),
+        '@api': resolve(__dirname, 'src/api'),
       },
     },
     exclude: ['playground/**'],
