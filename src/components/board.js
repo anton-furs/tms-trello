@@ -5,6 +5,7 @@ import {
   createList,
   createAddListModal,
   createConfirmModal,
+  createLimitWarnModal,
   createBoardHeader,
   createAddEditModal,
 } from '@components';
@@ -17,7 +18,7 @@ export const createBoard = ({ name }) => {
     switch (e.type) {
       case 'list:add-card':
         if (cardStore.isListLimitReached(e.detail.listId)) {
-          const modal = createConfirmModal({
+          const modal = createLimitWarnModal({
             title: 'Too many tasks in progress',
             message: `You can't add more than 10 tasks to the "In Progress" column. Please complete current tasks before starting new ones.`,
           });
@@ -94,7 +95,7 @@ export const createBoard = ({ name }) => {
 
       case 'card:move':
         if (cardStore.moveCard(e.detail.cardId, e.detail.direction)) {
-          const modalMove = createConfirmModal({
+          const modalMove = createLimitWarnModal({
             title: 'Too many tasks in progress',
             message: `You can't add more than 10 tasks to the "In Progress" column. Please complete current tasks before starting new ones.`,
           });

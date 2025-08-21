@@ -3,13 +3,12 @@ class Reactive {
     this.components = new Map();
     this.observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        mutation.removedNodes.forEach((node) => {
-          this.components.forEach((cleanup, element) => {
-            if (node === element || node.contains?.(element)) {
-              cleanup();
-              this.components.delete(element);
-            }
-          });
+        const removedNodes = new Set(mutation.removedNodes);
+        this.components.forEach((cleanup, element) => {
+          if (removedNodes.has(element) || [...removedNodes].some((node) => node.contains?.(element))) {
+            cleanup();
+            this.components.delete(element);
+          }
         });
       });
     });
