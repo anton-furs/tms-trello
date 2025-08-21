@@ -13,5 +13,5 @@ export { createModalBase } from './modal-base.js';
 export { createColorSelector } from './color-selector.js';
 export { createDropdownMenu } from './dropdown-menu.js';
 export { createConfirmModal } from './modal-confirm.js';
-export { createAddEditModal, showAddEditCard } from './modal-add-card.js';
+export { createAddEditModal } from './modal-add-card.js';
 export { createSelect } from './select.js';

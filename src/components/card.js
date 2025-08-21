@@ -93,9 +93,11 @@ export const createCard = ({ id, title, description, assignee, createdAt }) => {
   const addStyleClass = (element = []) => {
     element.forEach((elem) => elem.classList.add('card-content__move-button-hover'));
   };
+
   const removeStyleClass = (element = []) => {
     element.forEach((elem) => elem.classList.remove('card-content__move-button-hover'));
   };
+
   const hoverMoveButton = (event) => {
     const arrList = document.querySelectorAll('.list');
     let arrCardStart = cardStore.getCardsByListId(arrList[0].dataset.id);

@@ -1,13 +1,16 @@
 import { dom } from '@utils/dom';
-import { users } from '../api/users.js';
+import { userStore } from '@stores';
 import { createTextArea, createInput, createSelect } from '@components';
 
 export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText, assignee) => {
   const overlay = dom.create({ tag: 'div', className: 'modal-add-card__overlay' });
+
+  let clickStartedInside = false;
+
   const modalInput = createInput({ value: bodyTitle });
   const modatTextArea = createTextArea(bodyText);
 
-  const selectElem = createSelect({ value: assignee, options: users });
+  const selectElem = createSelect({ value: assignee, options: userStore.getUsers() });
 
   const buttonOk = dom.create({
     tag: 'button',
@@ -80,19 +83,39 @@ export const createAddEditModal = (cardTitle = 'Add a card', bodyTitle, bodyText
 
   modalAddCard.addEventListener('click', handleButtonGroupClick);
 
+  overlay.addEventListener('mousedown', (e) => {
+    clickStartedInside = e.target !== overlay;
+  });
+
   overlay.addEventListener('click', (e) => {
-    if (!modalAddCard.contains(e.target)) {
+    if (!modalAddCard.contains(e.target) && !clickStartedInside) {
+      overlay.remove();
+    }
+  });
+
+  overlay.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+
+      const confirmButton = overlay.querySelector('[data-action="confirm"]');
+      if (confirmButton) {
+        confirmButton.click();
+      }
+    }
+
+    if (e.key === 'Escape') {
       overlay.remove();
     }
   });
 
   overlay.append(modalAddCard);
 
-  return overlay;
-};
+  overlay.showModal = () => {
+    overlay.style.display = 'block';
+    setTimeout(() => {
+      modalInput.focus();
+    }, 0);
+  };
 
-export const showAddEditCard = (element) => {
-  const inputElem = element.querySelector('input');
-  element.style.display = 'block';
-  inputElem.focus();
+  return overlay;
 };
